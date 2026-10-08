@@ -1,0 +1,75 @@
+# Tracking transactions on the shared sandbox
+
+The dashboard and API responses contain transactions from every team on the shared account. You need a way to identify yours.
+
+Four patterns work. Mix and match.
+
+## Option A: tag every transaction with a participant ID (metadata)
+
+pawaPay accepts arbitrary key-value metadata on a deposit. Stamp every request with a team identifier:
+
+```json
+{
+  "depositId": "f4401bd2-1b8c-4017-9a8c-9a5c0c1e9d2a",
+  "amount": "1000",
+  "currency": "XAF",
+  "payer": {
+    "type": "MMO",
+    "accountDetails": {
+      "phoneNumber": "237653456789",
+      "provider": "MTN_MOMO_CMR"
+    }
+  },
+  "metadata": [
+    { "team": "team-ndole" },
+    { "participant": "jane@example.com", "isPII": true }
+  ]
+}
+```
+
+**Why pick this:** you can filter and search in the sandbox dashboard, and the tag survives across deposit IDs you might forget about.
+
+**Caveats:** you have to set it on every request. Bake it into a config so you don't forget.
+
+The WooCommerce plugin doesn't add metadata out of the box. You'd add it via a small WP filter hook. If you're building from scratch, ask the skill to wire in the metadata block. See the [Deposits API reference](https://docs.pawapay.io/v2/api-reference/Deposits/initiate-deposit) for the schema.
+
+## Option B: track your own transaction UUIDs
+
+Every deposit, payout, refund, or remittance you create has a UUID (`depositId`, `payoutId`, etc.). Log them as you create them. Those are your records.
+
+**Why pick this:** zero setup. The WooCommerce plugin already stores the pawaPay transaction ID against each order. If you're rolling your own, persist the ID in your DB the moment you generate it. The skill enforces this, because the same UUID is how pawaPay handles idempotency.
+
+**Caveats:** lose your local log (database wipe, lost laptop), lose the link. Pair this with Option A for safety.
+
+## Option C: have pawaPay forward callbacks to your URL (optional)
+
+If you want status updates as push callbacks instead of polling, pawaPay can forward callbacks to a URL of your choice. Email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with:
+
+- Your team name
+- The public URL(s) you want callbacks delivered to (deposit, payout, refund: whichever you need)
+
+You'll get the destination URL(s) back to plug into your callback configuration.
+
+**Why pick this:** real-time status updates pushed to your service, without each team's URL having to sit on the shared pawaPay account.
+
+**Caveats:** callbacks need a publicly reachable URL on your side (ngrok, cloudflared, or a deployed endpoint). For a Bootcamp demo, polling is less hassle.
+
+## Option D: poll for status (recommended default)
+
+Hit the pawaPay status endpoint when you need to know the outcome.
+
+```
+GET https://api.sandbox.pawapay.io/v2/deposits/<depositId>
+```
+
+The WooCommerce plugin polls for you on the checkout page until the deposit reaches a terminal state. No extra config. If you're building from scratch, ask the skill to wire up polling. It knows the right backoff and reconciliation pattern.
+
+**Why pick this:** no callback URL, no public hostname, no firewall holes. Works in any stack.
+
+**Caveats:** higher latency than callbacks. For a Bootcamp demo, that's fine.
+
+## Useful links
+
+- [pawaPay v2 docs: welcome](https://docs.pawapay.io/v2/docs/welcome)
+- [Deposits API reference](https://docs.pawapay.io/v2/api-reference/Deposits/initiate-deposit)
+- [Sandbox test numbers](https://docs.pawapay.io/v2/docs/test_numbers)
