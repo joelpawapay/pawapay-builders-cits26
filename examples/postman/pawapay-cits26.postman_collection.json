@@ -1,0 +1,309 @@
+{
+  "info": {
+    "name": "pawaPay CITS26 sandbox",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "pawaPay Merchant API v2 calls for the CITS26 Bootcamp. Set the `token` variable on the collection to your sandbox API token, then run the requests top to bottom. Each Initiate request creates a fresh ID and stores it, so the matching Check status request works without copy-paste."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.sandbox.pawapay.io"
+    },
+    {
+      "key": "token",
+      "value": "paste-your-sandbox-token-here"
+    },
+    {
+      "key": "team",
+      "value": "team-your-team-name"
+    },
+    {
+      "key": "phoneNumber",
+      "value": "237653456789"
+    },
+    {
+      "key": "provider",
+      "value": "MTN_MOMO_CMR"
+    },
+    {
+      "key": "depositId",
+      "value": ""
+    },
+    {
+      "key": "payoutId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Setup",
+      "item": [
+        {
+          "name": "Active configuration (Cameroon deposits)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/active-conf?country=CMR&operationType=DEPOSIT",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "active-conf"
+              ],
+              "query": [
+                {
+                  "key": "country",
+                  "value": "CMR"
+                },
+                {
+                  "key": "operationType",
+                  "value": "DEPOSIT"
+                }
+              ]
+            },
+            "description": "Lists the operators, limits, and decimal rules your account has in Cameroon."
+          }
+        },
+        {
+          "name": "Predict provider",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/predict-provider",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "predict-provider"
+              ]
+            },
+            "description": "Cleans up a phone number and returns its operator. Send whatever the customer typed.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"{{phoneNumber}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const r = pm.response.json();",
+                  "if (r.phoneNumber) { pm.collectionVariables.set(\"phoneNumber\", r.phoneNumber); }",
+                  "if (r.provider) { pm.collectionVariables.set(\"provider\", r.provider); }"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Collect money (deposit)",
+      "item": [
+        {
+          "name": "Initiate deposit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/deposits",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "deposits"
+              ]
+            },
+            "description": "Starts a deposit. ACCEPTED means pawaPay received it. Run Check deposit status to see the result.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"depositId\": \"{{depositId}}\",\n  \"amount\": \"1000\",\n  \"currency\": \"XAF\",\n  \"payer\": {\n    \"type\": \"MMO\",\n    \"accountDetails\": {\n      \"phoneNumber\": \"{{phoneNumber}}\",\n      \"provider\": \"{{provider}}\"\n    }\n  },\n  \"customerMessage\": \"CITS26 test\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set(\"depositId\", pm.variables.replaceIn(\"{{$guid}}\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check deposit status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/deposits/{{depositId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "deposits",
+                "{{depositId}}"
+              ]
+            },
+            "description": "Returns data.status: ACCEPTED, PROCESSING, COMPLETED, or FAILED."
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Hosted checkout (payment page)",
+      "item": [
+        {
+          "name": "Create payment page",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/paymentpage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "paymentpage"
+              ]
+            },
+            "description": "Returns a redirectUrl. Open it in a browser within 15 minutes and pay. Then run Check deposit status.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"depositId\": \"{{depositId}}\",\n  \"returnUrl\": \"https://example.com/payment-finished\",\n  \"amountDetails\": {\n    \"amount\": \"1000\",\n    \"currency\": \"XAF\"\n  },\n  \"country\": \"CMR\",\n  \"language\": \"FR\",\n  \"reason\": \"CITS26 test order\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set(\"depositId\", pm.variables.replaceIn(\"{{$guid}}\"));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Send money (payout)",
+      "item": [
+        {
+          "name": "Initiate payout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/v2/payouts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "payouts"
+              ]
+            },
+            "description": "Sends money to a wallet. A payout can sit in ENQUEUED while the operator is slow.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payoutId\": \"{{payoutId}}\",\n  \"amount\": \"1000\",\n  \"currency\": \"XAF\",\n  \"recipient\": {\n    \"type\": \"MMO\",\n    \"accountDetails\": {\n      \"phoneNumber\": \"{{phoneNumber}}\",\n      \"provider\": \"{{provider}}\"\n    }\n  },\n  \"customerMessage\": \"CITS26 payout\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set(\"payoutId\", pm.variables.replaceIn(\"{{$guid}}\"));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check payout status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/payouts/{{payoutId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "v2",
+                "payouts",
+                "{{payoutId}}"
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    }
+  ]
+}

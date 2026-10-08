@@ -20,9 +20,29 @@ pawaPay calls money coming in from a customer a deposit. A deposit runs in five 
 4. The operator sends a prompt to the customer's phone. The customer enters their PIN to approve.
 5. The deposit ends as `COMPLETED` or `FAILED`. Your app learns the result by asking pawaPay (polling) or by receiving a callback.
 
+```mermaid
+sequenceDiagram
+    participant App as Your app
+    participant P as pawaPay
+    participant Op as MTN or Orange
+    participant C as Customer's phone
+    App->>P: POST /v2/deposits (ID, amount, phone)
+    P-->>App: ACCEPTED
+    P->>Op: Collect 1000 XAF
+    Op->>C: PIN prompt
+    C->>Op: Customer enters PIN
+    Op-->>P: Done
+    App->>P: GET /v2/deposits/{ID}
+    P-->>App: COMPLETED
+```
+
 Step 3 trips up most first integrations. `ACCEPTED` means pawaPay received the request. Wait for `COMPLETED` before you deliver the goods.
 
 In the sandbox, step 4 is skipped. No phone rings, and the deposit completes in a few seconds.
+
+## The no-UI option: hosted checkout
+
+If you don't want to build a payment form, ask pawaPay for a **payment page**. Your server sends the amount, and pawaPay returns a link. The customer opens the link, types their number, and pays. pawaPay then sends them back to your site, and your server checks the status of the deposit. See [`examples/node/payment-page.mjs`](examples/node/payment-page.mjs).
 
 ## Sending money: a payout
 
@@ -40,5 +60,6 @@ A refund returns all or part of a completed deposit to the customer who paid.
 ## Where to go next
 
 - [getting-started.md](getting-started.md) to make your first sandbox deposit
+- [examples/](examples/) for code you can copy
 - [pawaPay docs: deposits](https://docs.pawapay.io/v2/docs/deposits) for the full flow
 - The [Claude skill](skill/README.md) to write the code with you

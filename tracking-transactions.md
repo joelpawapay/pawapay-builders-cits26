@@ -29,7 +29,7 @@ pawaPay accepts arbitrary key-value metadata on a deposit. Stamp every request w
 
 **Why pick this:** you can filter and search in the sandbox dashboard, and the tag survives across deposit IDs you might forget about.
 
-**Caveats:** you have to set it on every request. Bake it into a config so you don't forget.
+**Caveats:** you have to set it on every request. Put the tag in config so you can't forget it. The [examples](examples/) read it from `PAWAPAY_TEAM` in `.env`.
 
 The WooCommerce plugin doesn't add metadata out of the box. You'd add it via a small WP filter hook. If you're building from scratch, ask the skill to wire in the metadata block. See the [Deposits API reference](https://docs.pawapay.io/v2/api-reference/Deposits/initiate-deposit) for the schema.
 
@@ -52,7 +52,13 @@ You'll get the destination URL(s) back to plug into your callback configuration.
 
 **Why pick this:** real-time status updates pushed to your service, without each team's URL having to sit on the shared pawaPay account.
 
-**Caveats:** callbacks need a publicly reachable URL on your side (ngrok, cloudflared, or a deployed endpoint). For a Bootcamp demo, polling is less hassle.
+**Caveats:** callbacks need a public HTTPS URL on your side. A deployed app has one. On a laptop, open a tunnel to your local server:
+
+```bash
+cloudflared tunnel --url http://localhost:3000   # or: ngrok http 3000
+```
+
+Tunnel URLs change each time you restart the tunnel, so send Joel the new one if it changes. Your handler must reply `200` quickly. For a Bootcamp demo, polling is less hassle.
 
 ## Option D: poll for status (recommended default)
 
@@ -62,7 +68,7 @@ Hit the pawaPay status endpoint when you need to know the outcome.
 GET https://api.sandbox.pawapay.io/v2/deposits/<depositId>
 ```
 
-The WooCommerce plugin polls for you on the checkout page until the deposit reaches a terminal state. No extra config. If you're building from scratch, ask the skill to wire up polling. It knows the right backoff and reconciliation pattern.
+The WooCommerce plugin polls for you on the checkout page until the deposit reaches a terminal state. No extra config. The [examples](examples/) poll every 3 seconds. If you use Claude, ask the skill to wire up polling with backoff and reconciliation.
 
 **Why pick this:** no callback URL, no public hostname, no firewall holes. Works in any stack.
 

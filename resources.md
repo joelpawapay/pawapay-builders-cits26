@@ -19,9 +19,14 @@ Links, sessions, and contacts for CITS26.
 | --- | --- |
 | This repo | https://github.com/joelpawapay/pawapay-builders-cits26 |
 | Skill and plugin walkthrough (Loom) | https://www.loom.com/share/af99d1a8a13048a89220d21f1e001226 |
-| Sandbox onboarding | [getting-started.md](getting-started.md) |
+| README in French | [README.fr.md](README.fr.md) |
+| Sandbox onboarding and test numbers | [getting-started.md](getting-started.md) |
 | How a payment works | [how-payments-work.md](how-payments-work.md) |
-| Tracking transactions | [tracking-transactions.md](tracking-transactions.md) |
+| Runnable examples (Node, Python, PHP, curl) | [examples/](examples/) |
+| Postman collection | [examples/postman/](examples/postman/) |
+| Error codes and FAQ | [troubleshooting.md](troubleshooting.md) |
+| Tracking transactions and callbacks | [tracking-transactions.md](tracking-transactions.md) |
+| Demo checklist | [demo-checklist.md](demo-checklist.md) |
 | Claude skill | [skill/README.md](skill/README.md) |
 | WooCommerce plugin | [plugin/README.md](plugin/README.md) |
 

@@ -23,7 +23,7 @@ A WooCommerce payment gateway for pawaPay. Mobile money deposits across every pa
 
 ## Install
 
-1. Download `woocommerce-pawapay.zip` from this directory, or grab the [latest GitHub Release](../../../releases/latest).
+1. Download `woocommerce-pawapay.zip` from this directory.
 2. In the WordPress admin, open **Plugins → Add New → Upload Plugin**. Pick the `.zip`, install, activate.
 3. Go to **WooCommerce → Settings → Payments**. **Mobile Money (pawaPay)** appears in the list.
 4. Click **Manage**, then:
