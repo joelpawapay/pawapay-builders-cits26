@@ -30,7 +30,7 @@ A WooCommerce payment gateway for pawaPay. Mobile money deposits across every pa
    - Paste your sandbox API token (see [getting-started.md](../getting-started.md) for how to generate one)
    - Set environment to **Sandbox**
    - Optional: paste a signing key for signed requests
-   - **Callback URL**: leave blank. The plugin polls. If you need push callbacks, see [../tracking-transactions.md](../tracking-transactions.md). Email Joel and pawaPay will wire one up.
+   - **Callback URL**: leave blank. The plugin polls. If you need push callbacks, see [../tracking-transactions.md](../tracking-transactions.md).
 5. Save. Add a product, go to checkout, push a sandbox deposit through.
 
 ## Configuration reference

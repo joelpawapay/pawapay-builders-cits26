@@ -21,7 +21,7 @@ if (existsSync(".env")) {
 const TOKEN = process.env.PAWAPAY_API_TOKEN;
 const BASE_URL = process.env.PAWAPAY_BASE_URL || "https://api.sandbox.pawapay.io";
 const TEAM = process.env.PAWAPAY_TEAM || "team-unknown";
-const RETURN_URL = process.env.RETURN_URL || "https://example.com/payment-finished";
+const RETURN_URL = process.env.RETURN_URL || "https://github.com/joelpawapay/pawapay-builders-cits26/blob/main/examples/README.md#back-from-the-hosted-checkout";
 
 if (!TOKEN || TOKEN.startsWith("paste-")) {
   console.error("Set PAWAPAY_API_TOKEN in examples/.env first. See getting-started.md.");

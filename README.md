@@ -12,7 +12,7 @@ pawaPay gives every team free access to a shared sandbox: a test copy of the pay
 
 ## Your first payment in 15 minutes
 
-1. **Get access.** Email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with your team name and each member's email. Accept the invite from pawaPay.
+1. **Get access.** Each team member fills in the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform) with the email they want on the dashboard. Accept the invite from pawaPay when it arrives.
 2. **Create a token** in the [sandbox dashboard](https://dashboard.sandbox.pawapay.io) under **System configuration → API tokens**. Copy it. pawaPay shows it once.
 3. **Run a payment:**
 
@@ -77,7 +77,8 @@ To get the most from the clinic, accept your sandbox invite and create your toke
 
 ## Getting help
 
-- **Sandbox access, tokens, callbacks**: email Joel at joel.amoako@pawapay.co.uk
+- **Sandbox access and callbacks**: the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform)
+- **Anything the form doesn't cover**: email Joel at joel.amoako@pawapay.co.uk
 - **At the venue**: Dave Evans (14 to 16 October) and the pawaPay Cameroon team at the clinic desk
 - **An error code**: [troubleshooting.md](troubleshooting.md)
 

@@ -18,6 +18,7 @@ Links, sessions, and contacts for CITS26.
 | Resource | Link |
 | --- | --- |
 | This repo | https://github.com/joelpawapay/pawapay-builders-cits26 |
+| Registration form (sandbox access and callback URLs) | https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform |
 | Skill and plugin walkthrough (Loom) | https://www.loom.com/share/af99d1a8a13048a89220d21f1e001226 |
 | README in French | [README.fr.md](README.fr.md) |
 | Sandbox onboarding and test numbers | [getting-started.md](getting-started.md) |
@@ -30,7 +31,7 @@ Links, sessions, and contacts for CITS26.
 | Claude skill | [skill/README.md](skill/README.md) |
 | WooCommerce plugin | [plugin/README.md](plugin/README.md) |
 
-> **Callbacks**: polling works out of the box. If you need push callbacks, email Joel and pawaPay will forward callbacks to your URL.
+> **Callbacks**: polling works out of the box. If you need push callbacks, add your URLs to the registration form and pawaPay will forward callbacks to them.
 
 ## pawaPay sessions at CITS26
 

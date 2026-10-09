@@ -12,7 +12,7 @@ pawaPay donne à chaque équipe un accès gratuit à un sandbox partagé : une c
 
 ## Votre premier paiement en 15 minutes
 
-1. **Demandez l'accès.** Écrivez à Joel ([joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk)) avec le nom de votre équipe et l'adresse e-mail de chaque membre. Acceptez ensuite l'invitation envoyée par pawaPay.
+1. **Demandez l'accès.** Chaque membre de l'équipe remplit le [formulaire d'inscription](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform) avec l'adresse e-mail à utiliser sur le dashboard. Acceptez ensuite l'invitation envoyée par pawaPay.
 2. **Créez un token** dans le [dashboard sandbox](https://dashboard.sandbox.pawapay.io), rubrique **System configuration → API tokens**. Copiez-le tout de suite : pawaPay ne l'affiche qu'une fois.
 3. **Lancez un paiement :**
 
@@ -80,7 +80,8 @@ Pour profiter au mieux de la clinique, acceptez votre invitation et créez votre
 
 ## Besoin d'aide ?
 
-- **Accès au sandbox, tokens, callbacks** : Joel, joel.amoako@pawapay.co.uk
+- **Accès au sandbox et callbacks** : le [formulaire d'inscription](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform)
+- **Toute autre question** : Joel, joel.amoako@pawapay.co.uk
 - **Sur place** : Dave Evans (du 14 au 16 octobre) et l'équipe pawaPay Cameroun au stand
 - **Un code d'erreur** : [troubleshooting.md](troubleshooting.md)
 

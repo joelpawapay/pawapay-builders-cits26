@@ -6,10 +6,7 @@ Plan on 15 minutes, most of it waiting for the invite email.
 
 ## 1. Get added to the account
 
-Email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with:
-
-- Your team name
-- The email address of each team member who needs dashboard access
+Each team member who needs the dashboard fills in the **[registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform)** with their own email address. Leave the callback URL fields blank unless you already have a public URL. The [examples](examples/) poll for status and need no callback.
 
 Joel invites each address as a user on the shared sandbox account. pawaPay sends each person an invite email. Accept it and set a password. Check your spam folder if it hasn't arrived after a few minutes.
 

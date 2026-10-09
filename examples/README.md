@@ -54,6 +54,16 @@ Payment received. Deliver the goods.
 
 With the hosted checkout, pawaPay sends the customer back to your `returnUrl`. Anyone can open that URL, so check the deposit status with pawaPay before you mark the order paid. `payment-page.mjs check <depositId>` shows how.
 
+## Back from the hosted checkout
+
+After you pay on the hosted checkout, pawaPay sends you back to this section, the default `returnUrl` in the examples. Your payment went through pawaPay, but a return visit proves nothing. Confirm it with the status check:
+
+```bash
+node node/payment-page.mjs check <depositId>
+```
+
+In your own app, set `RETURN_URL` in `.env` to a page on your site, and run that same status check before you mark the order paid.
+
 ## Postman
 
 1. Import `postman/pawapay-cits26.postman_collection.json`.

@@ -216,7 +216,7 @@
             "description": "Returns a redirectUrl. Open it in a browser within 15 minutes and pay. Then run Check deposit status.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"depositId\": \"{{depositId}}\",\n  \"returnUrl\": \"https://example.com/payment-finished\",\n  \"amountDetails\": {\n    \"amount\": \"1000\",\n    \"currency\": \"XAF\"\n  },\n  \"country\": \"CMR\",\n  \"language\": \"FR\",\n  \"reason\": \"CITS26 test order\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",
+              "raw": "{\n  \"depositId\": \"{{depositId}}\",\n  \"returnUrl\": \"https://github.com/joelpawapay/pawapay-builders-cits26/blob/main/examples/README.md#back-from-the-hosted-checkout\",\n  \"amountDetails\": {\n    \"amount\": \"1000\",\n    \"currency\": \"XAF\"\n  },\n  \"country\": \"CMR\",\n  \"language\": \"FR\",\n  \"reason\": \"CITS26 test order\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",
               "options": {
                 "raw": {
                   "language": "json"

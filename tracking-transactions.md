@@ -43,12 +43,7 @@ Every deposit, payout, refund, or remittance you create has a UUID (`depositId`,
 
 ## Option C: have pawaPay forward callbacks to your URL (optional)
 
-If you want status updates as push callbacks instead of polling, pawaPay can forward callbacks to a URL of your choice. Email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with:
-
-- Your team name
-- The public URL(s) you want callbacks delivered to (deposit, payout, refund: whichever you need)
-
-You'll get the destination URL(s) back to plug into your callback configuration.
+If you want status updates as push callbacks instead of polling, pawaPay can forward callbacks to a URL of your choice. Add your public URLs to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform): one each for deposit, payout, and refund callbacks, whichever you need. If your URL changes after you register, email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with the new one.
 
 **Why pick this:** real-time status updates pushed to your service, without each team's URL having to sit on the shared pawaPay account.
 
@@ -58,7 +53,7 @@ You'll get the destination URL(s) back to plug into your callback configuration.
 cloudflared tunnel --url http://localhost:3000   # or: ngrok http 3000
 ```
 
-Tunnel URLs change each time you restart the tunnel, so send Joel the new one if it changes. Your handler must reply `200` quickly. For a Bootcamp demo, polling is less hassle.
+Tunnel URLs change each time you restart the tunnel, so send Joel the new one when it does. Your handler must reply `200` quickly. For a Bootcamp demo, polling is less hassle.
 
 ## Option D: poll for status (recommended default)
 
