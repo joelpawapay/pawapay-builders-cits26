@@ -1,5 +1,5 @@
 """
-scripts/sign_request.py — RFC 9421 message signature for pawaPay Merchant API v2.
+scripts/sign_request.py — RFC 9421 message signature for PawaPay Merchant API v2.
 
 Default: ECDSA P-256 with SHA-256 over signature base, SHA-512 for the Content-Digest.
 
@@ -20,7 +20,7 @@ Usage:
     #             Accept-Signature, Accept-Digest}.
     # Send headers along with Authorization + Content-Type with the same body bytes.
 
-IMPORTANT: pawaPay signs the EXACT bytes you submit. Don't re-serialise the JSON
+IMPORTANT: PawaPay signs the EXACT bytes you submit. Don't re-serialise the JSON
 between signing and sending — keep one immutable bytes object and pass it to both.
 """
 

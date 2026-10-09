@@ -1,4 +1,4 @@
-"""Collect a mobile money payment (a deposit) on the pawaPay sandbox.
+"""Collect a mobile money payment (a deposit) on the PawaPay sandbox.
 
 Python 3.8+, standard library only. No pip install needed.
 
@@ -33,7 +33,7 @@ if not TOKEN or TOKEN.startswith("paste-"):
 
 
 def stop(message):
-    print(f"pawaPay said: {message}", file=sys.stderr)
+    print(f"PawaPay said: {message}", file=sys.stderr)
     if "AUTHENTICATION" in message or "AUTHORISATION" in message:
         print("Check PAWAPAY_API_TOKEN in examples/.env. It must be a sandbox token.", file=sys.stderr)
     sys.exit(1)
@@ -71,7 +71,7 @@ print(f"Phone {predicted['phoneNumber']} is on {predicted['provider']}")
 # 2. Create the deposit ID yourself. In a real app, save it to your database now.
 deposit_id = str(uuid.uuid4())
 
-# 3. Ask pawaPay to collect the money.
+# 3. Ask PawaPay to collect the money.
 initiated = pawapay("POST", "/v2/deposits", {
     "depositId": deposit_id,
     "amount": amount,  # a string, never a number. XAF has no decimals.

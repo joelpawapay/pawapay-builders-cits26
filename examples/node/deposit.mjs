@@ -1,4 +1,4 @@
-// Collect a mobile money payment (a deposit) on the pawaPay sandbox.
+// Collect a mobile money payment (a deposit) on the PawaPay sandbox.
 // Node 18+, no packages to install.
 //
 // Run from the examples/ folder:
@@ -29,7 +29,7 @@ const phoneInput = process.argv[2] || "237653456789";
 const amount = process.argv[3] || "1000";
 
 function stop(message) {
-  console.error(`pawaPay said: ${message}`);
+  console.error(`PawaPay said: ${message}`);
   if (/AUTHENTICATION|AUTHORISATION/.test(message)) {
     console.error("Check PAWAPAY_API_TOKEN in examples/.env. It must be a sandbox token.");
   }
@@ -59,7 +59,7 @@ console.log(`Phone ${predicted.phoneNumber} is on ${predicted.provider}`);
 // 2. Create the deposit ID yourself. In a real app, save it to your database now.
 const depositId = randomUUID();
 
-// 3. Ask pawaPay to collect the money.
+// 3. Ask PawaPay to collect the money.
 const initiated = await pawapay("POST", "/v2/deposits", {
   depositId,
   amount, // a string, never a number. XAF has no decimals.

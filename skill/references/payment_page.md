@@ -1,8 +1,8 @@
-# Payment Page — pawaPay-hosted checkout
+# Payment Page — PawaPay-hosted checkout
 
-Use the Payment Page when you don't want to build your own UI: pawaPay hosts a checkout page where the customer enters the phone number, picks the provider, confirms the amount, and completes the deposit. You get a `redirectUrl`, send the customer there, and receive callbacks for the resulting deposit.
+Use the Payment Page when you don't want to build your own UI: PawaPay hosts a checkout page where the customer enters the phone number, picks the provider, confirms the amount, and completes the deposit. You get a `redirectUrl`, send the customer there, and receive callbacks for the resulting deposit.
 
-The Payment Page wraps a deposit. The resulting deposit appears in the deposits API (same status-check, callbacks, refund flow) — the only difference is the customer-facing UI is pawaPay's.
+The Payment Page wraps a deposit. The resulting deposit appears in the deposits API (same status-check, callbacks, refund flow) — the only difference is the customer-facing UI is PawaPay's.
 
 ## Endpoint
 
@@ -38,7 +38,7 @@ The OpenAPI spec does not declare signature parameters on `/v2/paymentpage`. Sig
 - `amountDetails` (optional) — `{ amount, currency }`. Locks the amount on the page. If omitted, the customer chooses.
 - `phoneNumber` (optional) — locks the MSISDN on the page (customer cannot change it). Sanitised MSISDN (no `+`, no spaces, country code included).
 - `language` (optional) — `EN | FR`. Defaults to the customer's browser locale.
-- `country` (optional) — ISO 3166-1 alpha-3. Restricts the page to providers in this one country. **Required when `amountDetails` is supplied** (so pawaPay can render the right currency context).
+- `country` (optional) — ISO 3166-1 alpha-3. Restricts the page to providers in this one country. **Required when `amountDetails` is supplied** (so PawaPay can render the right currency context).
 - `reason` (optional, 1-50 chars) — short description shown to the customer. Different from `customerMessage` (which appears in the SMS narration).
 - `metadata` (optional) — same convention as deposits.
 
@@ -62,7 +62,7 @@ Inherits the same set as deposits — `INVALID_INPUT, MISSING_PARAMETER, INVALID
 1. Merchant POSTs /v2/paymentpage → receives redirectUrl.
 2. Customer is redirected to redirectUrl.
 3. Customer enters details and presses "Pay".
-4. At "Pay" press, pawaPay registers a deposit using the supplied depositId.
+4. At "Pay" press, PawaPay registers a deposit using the supplied depositId.
    — Before this point, GET /v2/deposits/{depositId} returns NOT_FOUND.
 5. The standard deposit lifecycle runs (PIN prompt, REDIRECT_AUTH for Wave, etc.).
 6. Customer is redirected to returnUrl.
@@ -115,7 +115,7 @@ def on_return(deposit_id, token, base):
 ## Pitfalls
 
 - **Trusting the return URL.** A user can craft a fake return URL hit. Always re-verify the deposit state via `GET /v2/deposits/{depositId}` on landing.
-- **Hardcoding `amountDetails` without `country`.** Either both or neither (pawaPay needs the country to disambiguate currency context for the page).
+- **Hardcoding `amountDetails` without `country`.** Either both or neither (PawaPay needs the country to disambiguate currency context for the page).
 - **Showing the customer "payment failed" because the session expired.** No callback fires for expired sessions — your reconciliation cron is what catches them.
 - **Reusing a `depositId` across attempts.** Once the customer has pressed Pay, the deposit exists. A new attempt needs a new `depositId`.
 - **Skipping signature verification on the resulting deposit callback.** It's still a deposit callback — verify like any other.

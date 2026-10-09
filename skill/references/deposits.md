@@ -1,6 +1,6 @@
 # Deposits — collecting money from a customer
 
-A deposit moves funds from the customer's mobile money wallet into the merchant's pawaPay wallet. The merchant initiates it; the customer authorises it on their phone (PIN prompt, OTP, or redirect, depending on the provider).
+A deposit moves funds from the customer's mobile money wallet into the merchant's PawaPay wallet. The merchant initiates it; the customer authorises it on their phone (PIN prompt, OTP, or redirect, depending on the provider).
 
 ## Endpoints
 
@@ -20,7 +20,7 @@ Initiation response status: `ACCEPTED | REJECTED | DUPLICATE_IGNORED`.
 Lifecycle status (in status-check `data.status`): `ACCEPTED, PROCESSING, IN_RECONCILIATION, COMPLETED, FAILED`.
 Callback status: `COMPLETED, PROCESSING, FAILED` only (PROCESSING in callbacks happens for REDIRECT_AUTH providers — see below).
 
-Terminal: `COMPLETED`, `FAILED`. `IN_RECONCILIATION` is automatic — no action needed; pawaPay's reconciler resolves it within minutes (sometimes longer for failures).
+Terminal: `COMPLETED`, `FAILED`. `IN_RECONCILIATION` is automatic — no action needed; PawaPay's reconciler resolves it within minutes (sometimes longer for failures).
 
 ## Initiate — POST /v2/deposits
 
@@ -121,7 +121,7 @@ Field reference:
 - `failureReason` populated when `data.status = FAILED`.
 - `metadata` is returned as a flat object (one key per metadata entry).
 
-`NOT_FOUND` = pawaPay never saw this depositId. Safe to mark local record as `FAILED` if it's been long enough (15+ min).
+`NOT_FOUND` = PawaPay never saw this depositId. Safe to mark local record as `FAILED` if it's been long enough (15+ min).
 
 ## Resend callback — POST /v2/deposits/resend-callback/{depositId}
 
@@ -266,7 +266,7 @@ def _verify_status(token, deposit_id):
 
 ## Callback shape (deposit webhook)
 
-Pushed by pawaPay to your configured callback URL on `COMPLETED`, `FAILED`, and (REDIRECT_AUTH only) the moment `authorizationUrl` becomes available.
+Pushed by PawaPay to your configured callback URL on `COMPLETED`, `FAILED`, and (REDIRECT_AUTH only) the moment `authorizationUrl` becomes available.
 
 ```json
 {
@@ -293,8 +293,8 @@ See `references/callbacks.md` for full handler design.
 The merchant generates the `depositId` so that a retry never duplicates a payment:
 
 - Persist the `depositId` before the initiation HTTP call.
-- On network error / timeout: call `GET /v2/deposits/{depositId}`. If `FOUND`, the deposit reached pawaPay — handle accordingly. If `NOT_FOUND` and ≥15 minutes have passed, mark FAILED.
-- On `DUPLICATE_IGNORED` response: the deposit is already known to pawaPay. Call status-check to learn its current state.
-- Reuse of the same `depositId` for a different transaction is impossible — pawaPay rejects it. Always generate a new UUIDv4 per attempt.
+- On network error / timeout: call `GET /v2/deposits/{depositId}`. If `FOUND`, the deposit reached PawaPay — handle accordingly. If `NOT_FOUND` and ≥15 minutes have passed, mark FAILED.
+- On `DUPLICATE_IGNORED` response: the deposit is already known to PawaPay. Call status-check to learn its current state.
+- Reuse of the same `depositId` for a different transaction is impossible — PawaPay rejects it. Always generate a new UUIDv4 per attempt.
 
 See `references/errors.md` for the reconciliation cron pattern.

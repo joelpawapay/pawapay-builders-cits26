@@ -6,7 +6,7 @@ Four patterns work. Mix and match.
 
 ## Option A: tag every transaction with a participant ID (metadata)
 
-pawaPay accepts arbitrary key-value metadata on a deposit. Stamp every request with a team identifier:
+PawaPay accepts arbitrary key-value metadata on a deposit. Stamp every request with a team identifier:
 
 ```json
 {
@@ -27,7 +27,19 @@ pawaPay accepts arbitrary key-value metadata on a deposit. Stamp every request w
 }
 ```
 
-**Why pick this:** you can filter and search in the sandbox dashboard, and the tag survives across deposit IDs you might forget about.
+**Why pick this:** you can find your transactions in the dashboard, and the tag survives across deposit IDs you might forget about.
+
+**Finding them in the dashboard:** type the tag value into the search bar at the top of the sandbox dashboard. Three rules:
+
+- Search matches the **full** value only. `team-ndole` finds `team-ndole`, but `ndole` finds nothing. Pick one exact tag and use it everywhere.
+- Make the tag unique to your team. `team-ndole` is better than `team1`, which another team might also pick.
+- Search covers the last three months, which is plenty for the event.
+
+The search bar also finds a transaction by its deposit ID or phone number.
+
+**Tag single orders too.** Add a second metadata entry per payment, such as `{ "orderId": "ORD-1042" }`, so you can search for one order directly. Each key can appear only once per transaction.
+
+**`clientReferenceId` is your own reference.** You can also send `clientReferenceId` (for example `"ORD-1042"`) on deposits and payouts. The status check returns it, but callbacks don't include it and the dashboard search doesn't list it. Use it alongside metadata, not instead of it.
 
 **Caveats:** you have to set it on every request. Put the tag in config so you can't forget it. The [examples](examples/) read it from `PAWAPAY_TEAM` in `.env`.
 
@@ -37,15 +49,15 @@ The WooCommerce plugin doesn't add metadata out of the box. You'd add it via a s
 
 Every deposit, payout, refund, or remittance you create has a UUID (`depositId`, `payoutId`, etc.). Log them as you create them. Those are your records.
 
-**Why pick this:** zero setup. The WooCommerce plugin already stores the pawaPay transaction ID against each order. If you're rolling your own, persist the ID in your DB the moment you generate it. The skill enforces this, because the same UUID is how pawaPay handles idempotency.
+**Why pick this:** zero setup. The WooCommerce plugin already stores the PawaPay transaction ID against each order. If you're rolling your own, persist the ID in your DB the moment you generate it. The skill enforces this, because the same UUID is how PawaPay handles idempotency.
 
 **Caveats:** lose your local log (database wipe, lost laptop), lose the link. Pair this with Option A for safety.
 
-## Option C: have pawaPay forward callbacks to your URL (optional)
+## Option C: have PawaPay forward callbacks to your URL (optional)
 
-If you want status updates as push callbacks instead of polling, pawaPay can forward callbacks to a URL of your choice. Add your public URLs to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform): one each for deposit, payout, and refund callbacks, whichever you need. If your URL changes after you register, email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with the new one.
+If you want status updates as push callbacks instead of polling, PawaPay can forward callbacks to a URL of your choice. Add your public URLs to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform): one each for deposit, payout, and refund callbacks, whichever you need. If your URL changes after you register, email Joel at [joel.amoako@pawapay.co.uk](mailto:joel.amoako@pawapay.co.uk) with the new one.
 
-**How it works on the shared account:** pawaPay sends every callback from the CITS26 account to every registered URL. Your server receives other teams' callbacks too. Reply `200` to all of them, then keep the ones tagged with your team (Option A) or whose ID you created (Option B). [`examples/node/callback-server.mjs`](examples/node/callback-server.mjs) does this.
+**How it works on the shared account:** PawaPay sends every callback from the CITS26 account to every registered URL. Your server receives other teams' callbacks too. Reply `200` to all of them, then keep the ones tagged with your team (Option A) or whose ID you created (Option B). [`examples/node/callback-server.mjs`](examples/node/callback-server.mjs) does this.
 
 **Why pick this:** status updates arrive as soon as a payment completes, with no polling loop.
 
@@ -55,15 +67,15 @@ If you want status updates as push callbacks instead of polling, pawaPay can for
 cloudflared tunnel --url http://localhost:3000   # or: ngrok http 3000
 ```
 
-Tunnel URLs change each time you restart the tunnel, so send Joel the new one when it does. Your handler must reply `200` quickly, including for callbacks it ignores. pawaPay retries, so the same callback can arrive more than once.
+Tunnel URLs change each time you restart the tunnel, so send Joel the new one when it does. Your handler must reply `200` quickly, including for callbacks it ignores. PawaPay retries, so the same callback can arrive more than once.
 
-**Don't verify callback signatures on the shared account.** Callbacks arrive with pawaPay's `Signature`, `Signature-Input`, and `Content-Digest` headers, but pawaPay signs them for the forwarding service's address, not yours. A signature check on your server fails every time, and if your handler then replies `401`, the callback keeps retrying and never counts as delivered. Skip verification for CITS26 and filter by your `team` tag. pawaPay's [signatures guide](https://docs.pawapay.io/v2/docs/signatures) explains how signing works when you need it later. If you build with the Claude skill, tell it: "don't verify callback signatures". On your own production account, callbacks come to you directly, so turn verification back on.
+**Don't verify callback signatures on the shared account.** Callbacks arrive with PawaPay's `Signature`, `Signature-Input`, and `Content-Digest` headers, but PawaPay signs them for the forwarding service's address, not yours. A signature check on your server fails every time, and if your handler then replies `401`, the callback keeps retrying and never counts as delivered. Skip verification for CITS26 and filter by your `team` tag. PawaPay's [signatures guide](https://docs.pawapay.io/v2/docs/signatures) explains how signing works when you need it later. If you build with the Claude skill, tell it: "don't verify callback signatures". On your own production account, callbacks come to you directly, so turn verification back on.
 
 **Compare amounts as numbers.** You send `"1000"`, but callbacks report `"amount": "1000.0000"`. Parse both before comparing. For a Bootcamp demo, polling is less hassle.
 
 ## Option D: poll for status (recommended default)
 
-Hit the pawaPay status endpoint when you need to know the outcome.
+Hit the PawaPay status endpoint when you need to know the outcome.
 
 ```
 GET https://api.sandbox.pawapay.io/v2/deposits/<depositId>
@@ -77,6 +89,6 @@ The WooCommerce plugin polls for you on the checkout page until the deposit reac
 
 ## Useful links
 
-- [pawaPay v2 docs: welcome](https://docs.pawapay.io/v2/docs/welcome)
+- [PawaPay v2 docs: welcome](https://docs.pawapay.io/v2/docs/welcome)
 - [Deposits API reference](https://docs.pawapay.io/v2/api-reference/Deposits/initiate-deposit)
 - [Sandbox test numbers](https://docs.pawapay.io/v2/docs/test_numbers)

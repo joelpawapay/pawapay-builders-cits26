@@ -1,7 +1,7 @@
 """
-scripts/verify_callback.py — Verify an inbound RFC 9421 signed callback from pawaPay.
+scripts/verify_callback.py — Verify an inbound RFC 9421 signed callback from PawaPay.
 
-Use this in your callback handler to confirm the request actually came from pawaPay
+Use this in your callback handler to confirm the request actually came from PawaPay
 and the body wasn't tampered with.
 
 Dependencies:
@@ -189,7 +189,7 @@ def _extract_signature_bytes(signature_header: str, expected_label: str) -> byte
     # Example: sig-pp=:base64:
     m = re.match(rf"^{re.escape(expected_label)}=:([A-Za-z0-9+/=]+):$", signature_header.strip())
     if not m:
-        # Fallback: accept any label, in case pawaPay uses a different one.
+        # Fallback: accept any label, in case PawaPay uses a different one.
         m = re.match(r"^[A-Za-z0-9_-]+=:([A-Za-z0-9+/=]+):$", signature_header.strip())
         if not m:
             raise VerificationError(f"malformed Signature: {signature_header!r}")

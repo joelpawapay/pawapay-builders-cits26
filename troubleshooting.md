@@ -1,8 +1,8 @@
 # Troubleshooting and FAQ
 
-Find your error code below. pawaPay puts it in `failureReason.failureCode` on every failed response. The full list is on pawaPay's [failure codes page](https://docs.pawapay.io/v2/docs/failure_codes).
+Find your error code below. PawaPay puts it in `failureReason.failureCode` on every failed response. The full list is on PawaPay's [failure codes page](https://docs.pawapay.io/v2/docs/failure_codes).
 
-## pawaPay rejected the request
+## PawaPay rejected the request
 
 These come back straight away with status `REJECTED`, or as an error body with no status. Nothing reached the customer, so fix the request and send it again with a new ID.
 
@@ -13,7 +13,7 @@ These come back straight away with status `REJECTED`, or as an error body with n
 | `AUTHORISATION_ERROR` | The token can't call this endpoint | Ask Joel |
 | `MISSING_PARAMETER` | A required field is missing | `failureMessage` names the field |
 | `INVALID_PARAMETER` | A field has the wrong format | Read `failureMessage`. Check the ID is a UUIDv4 and `customerMessage` is 4 to 22 letters, digits, or spaces |
-| `UNSUPPORTED_PARAMETER` | A field name pawaPay doesn't know | Check spelling and nesting against the examples |
+| `UNSUPPORTED_PARAMETER` | A field name PawaPay doesn't know | Check spelling and nesting against the examples |
 | `INVALID_INPUT` | The body isn't valid JSON | Send `Content-Type: application/json` and a JSON body |
 | `INVALID_AMOUNT` | Decimals on an XAF amount | Send `"1000"`, not `"1000.50"` |
 | `AMOUNT_OUT_OF_BOUNDS` | Amount below the minimum or above the maximum | Read the limits from `GET /v2/active-conf?country=CMR` |
@@ -21,9 +21,9 @@ These come back straight away with status `REJECTED`, or as an error body with n
 | `INVALID_PROVIDER` / `INVALID_CURRENCY` | Wrong provider code, or a currency the provider doesn't take | Use `MTN_MOMO_CMR` or `ORANGE_CMR` with `XAF` |
 | `DUPLICATE_METADATA_FIELD` | The same key twice in `metadata` | Use each key once |
 | `PROVIDER_TEMPORARILY_UNAVAILABLE` | The operator is down | Try again later. `GET /v2/availability?country=CMR` shows the status |
-| `UNKNOWN_ERROR` | Something broke inside pawaPay | Don't mark the payment failed yet. Check the status with the same ID first |
+| `UNKNOWN_ERROR` | Something broke inside PawaPay | Don't mark the payment failed yet. Check the status with the same ID first |
 
-`DUPLICATE_IGNORED` is not an error. It means pawaPay already has a transaction with that ID, so it ignored the second request. Check the status of the first one.
+`DUPLICATE_IGNORED` is not an error. It means PawaPay already has a transaction with that ID, so it ignored the second request. Check the status of the first one.
 
 ## The payment failed
 
@@ -42,17 +42,17 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 **The status stays `ACCEPTED` or `PROCESSING`.** In the sandbox this takes seconds unless you used a number that stays pending, such as `237653456129`. In production the customer has to answer the PIN prompt, which takes longer. Keep polling, and don't treat a pending payment as failed.
 
-**`IN_RECONCILIATION`.** pawaPay is confirming the result with the operator. It resolves on its own. Keep polling.
+**`IN_RECONCILIATION`.** PawaPay is confirming the result with the operator. It resolves on its own. Keep polling.
 
-**The status check returns `NOT_FOUND`.** pawaPay never received that ID. Either the first request failed before reaching pawaPay, or, for the hosted checkout, the customer hasn't pressed Pay yet.
+**The status check returns `NOT_FOUND`.** PawaPay never received that ID. Either the first request failed before reaching PawaPay, or, for the hosted checkout, the customer hasn't pressed Pay yet.
 
-**My browser JavaScript can't call the API.** Call pawaPay from your server, never from the browser or a mobile app. Code in the browser exposes your token to anyone who opens developer tools. Have your frontend call your own backend, and have the backend call pawaPay.
+**My browser JavaScript can't call the API.** Call PawaPay from your server, never from the browser or a mobile app. Code in the browser exposes your token to anyone who opens developer tools. Have your frontend call your own backend, and have the backend call PawaPay.
 
-**My callback handler rejects every callback with a signature error.** On the shared CITS26 account, pawaPay signs callbacks for the forwarding service's address, so verification fails on your server. Turn signature verification off and reply `200`. See [tracking-transactions.md](tracking-transactions.md).
+**My callback handler rejects every callback with a signature error.** On the shared CITS26 account, PawaPay signs callbacks for the forwarding service's address, so verification fails on your server. Turn signature verification off and reply `200`. See [tracking-transactions.md](tracking-transactions.md).
 
 **The callback amount doesn't match what I sent.** Callbacks report amounts with decimals, such as `"1000.0000"` for `"1000"`. Compare them as numbers, not strings.
 
-**Callbacks stopped for everyone.** Someone probably changed the **Callback URLs** or **API Security** settings in the dashboard. Tell the pawaPay team at the clinic desk, or email Joel.
+**Callbacks stopped for everyone.** Someone probably changed the **Callback URLs** or **API Security** settings in the dashboard. Tell the PawaPay team at the clinic desk, or email Joel.
 
 **I can't find my transactions in the dashboard.** Every team shares the account. Search by your deposit ID, or by the `team` metadata tag. See [tracking-transactions.md](tracking-transactions.md).
 
@@ -62,7 +62,7 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 ### Going live
 
-**Can we take real money during the Summit?** The sandbox moves no real money. Going live needs a production account, which goes through pawaPay's onboarding. pawaPay's [going live guide](https://docs.pawapay.io/v2/docs/going_live) explains the steps, and the pawaPay clinic desk can tell you what that takes for your team.
+**Can we take real money during the Summit?** The sandbox moves no real money. Going live needs a production account, which goes through PawaPay's onboarding. PawaPay's [going live guide](https://docs.pawapay.io/v2/docs/going_live) explains the steps, and the PawaPay clinic desk can tell you what that takes for your team.
 
 **Do we need a registered company?** Not for the sandbox. For production, ask at the clinic desk.
 
@@ -76,6 +76,6 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 **Can we get push callbacks instead of polling?** Yes. Your server needs a public HTTPS URL. On a laptop, a tunnel gives you one: `cloudflared tunnel --url http://localhost:3000` or `ngrok http 3000`. Every registered URL receives every team's callbacks, so filter by your `team` tag. [`examples/node/callback-server.mjs`](examples/node/callback-server.mjs) shows how. Add the URL to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform). See [tracking-transactions.md](tracking-transactions.md).
 
-**Can we build a USSD app, a WhatsApp bot, or a mobile app?** Yes. Any backend that can make HTTPS requests can call pawaPay. Keep the token on the server.
+**Can we build a USSD app, a WhatsApp bot, or a mobile app?** Yes. Any backend that can make HTTPS requests can call PawaPay. Keep the token on the server.
 
 **What happens to the sandbox after the event?** The shared account exists for CITS26. Plan for it to close afterwards, and don't depend on it for anything long-term.

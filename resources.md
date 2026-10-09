@@ -2,7 +2,7 @@
 
 Links, sessions, and contacts for CITS26.
 
-## pawaPay
+## PawaPay
 
 | Resource | Link |
 | --- | --- |
@@ -44,9 +44,9 @@ Links, sessions, and contacts for CITS26.
 | Claude skill | [skill/README.md](skill/README.md) |
 | WooCommerce plugin | [plugin/README.md](plugin/README.md) |
 
-> **Callbacks**: polling works out of the box. If you need push callbacks, add your URLs to the registration form and pawaPay will forward callbacks to them.
+> **Callbacks**: polling works out of the box. If you need push callbacks, add your URLs to the registration form and PawaPay will forward callbacks to them.
 
-## pawaPay sessions at CITS26
+## PawaPay sessions at CITS26
 
 All sessions take place at the Palais des Congrès, Yaoundé. Times follow the draft programme, so check the printed programme on the day.
 
@@ -54,8 +54,8 @@ All sessions take place at the Palais des Congrès, Yaoundé. Times follow the d
 | --- | --- | --- |
 | 14 Oct, 09:00 | Talk to the Bootcamp cohort | Questions |
 | 14 Oct, 11:00 | Integration clinic | A laptop, and your sandbox invite accepted |
-| 15 Oct, from 12:00 | pawaPay clinic desk | Any integration question |
-| 15 Oct, 14:00 | Fireside chat on pawaPay infrastructure, main stage | Questions for the floor |
+| 15 Oct, from 12:00 | PawaPay clinic desk | Any integration question |
+| 15 Oct, 14:00 | Fireside chat on PawaPay infrastructure, main stage | Questions for the floor |
 | 16 Oct, 09:00 | Developer workshop, 90 minutes | A problem you're stuck on |
 
 ## WooCommerce and WordPress
@@ -70,7 +70,7 @@ All sessions take place at the Palais des Congrès, Yaoundé. Times follow the d
 
 | Person | Role | How to reach |
 | --- | --- | --- |
-| Joel Amoako | pawaPay: sandbox access, tokens, callbacks, remote support | joel.amoako@pawapay.co.uk |
-| Dave Evans | pawaPay: sessions and clinic, 14 to 16 October | At the venue |
-| pawaPay Cameroon team | pawaPay: on-site coordination | At the venue |
+| Joel Amoako | PawaPay: sandbox access, tokens, callbacks, remote support | joel.amoako@pawapay.co.uk |
+| Dave Evans | PawaPay: sessions and clinic, 14 to 16 October | At the venue |
+| PawaPay Cameroon team | PawaPay: on-site coordination | At the venue |
 | Mountain Hub | Event organiser | At the venue, or hello@info.citscm.com |

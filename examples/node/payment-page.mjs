@@ -1,5 +1,5 @@
-// Create a pawaPay hosted checkout link. pawaPay shows the payment form,
-// so you build no payment UI. Open the link, pay, and pawaPay sends the
+// Create a PawaPay hosted checkout link. PawaPay shows the payment form,
+// so you build no payment UI. Open the link, pay, and PawaPay sends the
 // customer back to RETURN_URL.
 // Node 18+, no packages to install.
 //
@@ -29,7 +29,7 @@ if (!TOKEN || TOKEN.startsWith("paste-")) {
 }
 
 function stop(message) {
-  console.error(`pawaPay said: ${message}`);
+  console.error(`PawaPay said: ${message}`);
   if (/AUTHENTICATION|AUTHORISATION/.test(message)) {
     console.error("Check PAWAPAY_API_TOKEN in examples/.env. It must be a sandbox token.");
   }
@@ -51,7 +51,7 @@ async function pawapay(method, path, body) {
 }
 
 if (process.argv[2] === "check") {
-  // Always confirm the result with pawaPay. Anyone can visit your return URL.
+  // Always confirm the result with PawaPay. Anyone can visit your return URL.
   const check = await pawapay("GET", `/v2/deposits/${process.argv[3]}`);
   if (check.status === "NOT_FOUND") {
     console.log("No payment yet. The customer has not pressed Pay, or the link expired.");

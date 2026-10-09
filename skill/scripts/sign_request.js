@@ -1,5 +1,5 @@
 // scripts/sign_request.js
-// RFC 9421 message signature for pawaPay Merchant API v2.
+// RFC 9421 message signature for PawaPay Merchant API v2.
 // Default: ECDSA P-256 with SHA-256 over signature base, SHA-512 for the Content-Digest.
 // Standard library only — no external deps.
 //
@@ -28,7 +28,7 @@ const ACCEPT_DIGEST = "sha-256,sha-512";
 
 /**
  * Sign a request and return the set of headers to attach.
- * NOTE: pawaPay expects you to send the EXACT bytes you signed. Serialise once, sign
+ * NOTE: PawaPay expects you to send the EXACT bytes you signed. Serialise once, sign
  * those bytes, send those bytes. Don't re-serialise.
  */
 export function signRequest({

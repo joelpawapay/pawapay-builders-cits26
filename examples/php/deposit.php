@@ -1,5 +1,5 @@
 <?php
-// Collect a mobile money payment (a deposit) on the pawaPay sandbox.
+// Collect a mobile money payment (a deposit) on the PawaPay sandbox.
 // PHP 7.4+ with the curl extension. No Composer packages needed.
 //
 // Run from the examples/ folder:
@@ -26,7 +26,7 @@ if ($token === '' || strpos($token, 'paste-') === 0) {
 
 function stop(string $message): void
 {
-    fwrite(STDERR, "pawaPay said: $message\n");
+    fwrite(STDERR, "PawaPay said: $message\n");
     if (preg_match('/AUTHENTICATION|AUTHORISATION/', $message)) {
         fwrite(STDERR, "Check PAWAPAY_API_TOKEN in examples/.env. It must be a sandbox token.\n");
     }
@@ -74,7 +74,7 @@ echo "Phone {$predicted['phoneNumber']} is on {$predicted['provider']}\n";
 // 2. Create the deposit ID yourself. In a real app, save it to your database now.
 $depositId = uuidv4();
 
-// 3. Ask pawaPay to collect the money.
+// 3. Ask PawaPay to collect the money.
 $initiated = pawapay('POST', '/v2/deposits', [
     'depositId' => $depositId,
     'amount' => (string) $amount, // a string, never a number. XAF has no decimals.

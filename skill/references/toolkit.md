@@ -82,7 +82,7 @@ The most important read endpoint. Returns everything you need to dynamically con
 #### `signatureConfiguration`
 
 - `signedRequestsOnly` — when `true`, all financial-initiation calls must be signed (otherwise rejected with `HTTP_SIGNATURE_ERROR`).
-- `signedCallbacks` — when `true`, callbacks from pawaPay carry RFC 9421 signature headers.
+- `signedCallbacks` — when `true`, callbacks from PawaPay carry RFC 9421 signature headers.
 
 Read this once at app startup and configure your signing/verification accordingly.
 
@@ -107,7 +107,7 @@ The per-operation configuration. Common fields:
 - `minAmount`, `maxAmount` — strings, in the currency. Validate before initiation.
 - `decimalsInAmount` — `TWO_PLACES | NONE`. Round amounts accordingly.
 - `status` — `OPERATIONAL | DELAYED | CLOSED`. See `availability` below for the meanings.
-- `callbackUrl` — the URL pawaPay POSTs to for this operationType. Set in the Dashboard; surfaced here.
+- `callbackUrl` — the URL PawaPay POSTs to for this operationType. Set in the Dashboard; surfaced here.
 
 DEPOSIT-only fields (PROVIDER_AUTH context):
 
@@ -186,7 +186,7 @@ Show this status to users up front so they can pick another provider or come bac
 { "phoneNumber": "25007 834-56789a" }
 ```
 
-Free-form input — pawaPay strips whitespace, special characters, leading zeros, and validates digit count for the country.
+Free-form input — PawaPay strips whitespace, special characters, leading zeros, and validates digit count for the country.
 
 ### Response — 200
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Collect a mobile money payment (a deposit) on the pawaPay sandbox with curl.
+# Collect a mobile money payment (a deposit) on the PawaPay sandbox with curl.
 # Needs bash, curl, and uuidgen (or python3).
 #
 # Run from the examples/ folder:

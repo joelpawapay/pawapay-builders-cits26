@@ -124,7 +124,7 @@ But: rely on `predict-provider` to detect and sanitise. These codes are for sani
 
 ## When new countries / providers launch
 
-pawaPay adds new MMOs and countries periodically. Your code stays correct if you:
+PawaPay adds new MMOs and countries periodically. Your code stays correct if you:
 
 1. Read provider list from `active-conf` rather than hardcoding.
 2. Render `displayName` / `logo` from active-conf.

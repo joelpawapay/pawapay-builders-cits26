@@ -111,7 +111,7 @@ Run all these against your sandbox account before going live:
 - `RECIPIENT_NOT_FOUND` (suffix `089`) → callback `FAILED`.
 - `WALLET_LIMIT_REACHED` (suffix `099`) → callback `FAILED`.
 - `UNSPECIFIED_FAILURE` (suffix `119`) → callback `FAILED`.
-- `ENQUEUED` flow — simulate by initiating during a `DELAYED` state. (Sandbox doesn't trigger DELAYED on its own; the easier path is to verify status-check returns `ENQUEUED` from a fixture; for true testing, ask pawaPay support to flag a sandbox provider as DELAYED.)
+- `ENQUEUED` flow — simulate by initiating during a `DELAYED` state. (Sandbox doesn't trigger DELAYED on its own; the easier path is to verify status-check returns `ENQUEUED` from a fixture; for true testing, ask PawaPay support to flag a sandbox provider as DELAYED.)
 - `MANUALLY_CANCELLED` — initiate a payout, then call `POST /v2/payouts/fail-enqueued/{payoutId}` while it's enqueued.
 - Bulk payouts — submit an array with a mix of valid and invalid entries; verify each entry resolves independently.
 
@@ -136,7 +136,7 @@ Run all these against your sandbox account before going live:
 - Inbound callback with `signedCallbacks: true` — verify your handler validates the signature.
 
 ### Reconciliation
-- Initiate a deposit, kill your callback handler before pawaPay can deliver. Wait 15+ minutes. Verify the reconciliation cron picks up the pending record, calls status-check, and marks it appropriately.
+- Initiate a deposit, kill your callback handler before PawaPay can deliver. Wait 15+ minutes. Verify the reconciliation cron picks up the pending record, calls status-check, and marks it appropriately.
 - Initiate a deposit, kill the request mid-flight (close the socket). Verify your code calls status-check and recovers gracefully.
 
 ## Tips

@@ -1,6 +1,6 @@
 # Refunds — returning a previously collected deposit
 
-Refunds move funds from the merchant's pawaPay wallet back to the customer who paid. The refund references the original `depositId` — the customer's account details are inferred, not re-supplied.
+Refunds move funds from the merchant's PawaPay wallet back to the customer who paid. The refund references the original `depositId` — the customer's account details are inferred, not re-supplied.
 
 ## Endpoints
 
@@ -161,7 +161,7 @@ Set in `failureReason.failureCode` when `data.status = FAILED`:
 - **Refunding more than what's left.** `AMOUNT_TOO_LARGE`. Track partial refunds locally to avoid bouncing.
 - **Concurrent partial refunds on one deposit.** Only one at a time — `REFUND_IN_PROGRESS`. Serialise per-deposit refunds in your code.
 - **Sending `currency` without `amount`.** Treated as a full refund anyway; `amount` is the trigger.
-- **Forgetting refunds need wallet balance.** Refunds debit your pawaPay wallet. Insufficient balance → `PAWAPAY_WALLET_OUT_OF_FUNDS`.
+- **Forgetting refunds need wallet balance.** Refunds debit your PawaPay wallet. Insufficient balance → `PAWAPAY_WALLET_OUT_OF_FUNDS`.
 - **Assuming refund hits the customer immediately.** Same lifecycle as payouts — including `ENQUEUED` during MMO downtime.
 
 ## Sample (Python)

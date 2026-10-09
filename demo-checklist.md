@@ -9,7 +9,7 @@ Run through this before you present. A live payment on screen is the strongest p
 - [ ] Your app waits for `COMPLETED` before it shows "paid". `ACCEPTED` is not enough.
 - [ ] Your token lives in `.env` or your host's settings, not in your code or your GitHub repo.
 - [ ] Your deployed app has the token too. Check the environment variables on Vercel, Render, Railway, or wherever it runs.
-- [ ] Every transaction carries your `team` metadata tag, so the pawaPay team can find your payments.
+- [ ] Every transaction carries your `team` metadata tag, so the PawaPay team can find your payments.
 - [ ] MTN and Orange logos in your app follow the [provider brand guidelines](https://docs.pawapay.io/v2/docs/brand_guidelines).
 
 ## One hour before
@@ -30,4 +30,4 @@ Run through this before you present. A live payment on screen is the strongest p
 
 - `AUTHENTICATION_ERROR`: the token is missing or wrong in the environment you're running.
 - Stuck on pending: check you used a success number, not `...129`.
-- Anything else: [troubleshooting.md](troubleshooting.md), or find the pawaPay team at the clinic desk.
+- Anything else: [troubleshooting.md](troubleshooting.md), or find the PawaPay team at the clinic desk.

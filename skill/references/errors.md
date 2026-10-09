@@ -49,7 +49,7 @@ There are two categories of `failureCode`:
 | `AMOUNT_TOO_LARGE`                | 200  | Refunds      | Refund amount > remaining refundable. |
 | `DEPOSIT_ALREADY_REFUNDED`        | 200  | Refunds      | Deposit fully refunded. |
 | `REFUND_IN_PROGRESS`              | 200  | Refunds      | Another refund is processing for this deposit. |
-| `UNKNOWN_ERROR`                   | 500  | All          | pawaPay internal issue. **Do not assume failure** — verify via status-check. |
+| `UNKNOWN_ERROR`                   | 500  | All          | PawaPay internal issue. **Do not assume failure** — verify via status-check. |
 
 ## Transaction failure codes (post-processing — appear in callbacks and status-check)
 
@@ -70,7 +70,7 @@ There are two categories of `failureCode`:
 | `REFUND_IN_PROGRESS`              | Refunds                | (Also a transaction failure.) |
 | `TRANSACTION_ALREADY_IN_PROCESS`  | Deposits (Kenya/Ethiopia) | A different transaction is already in flight on the same wallet. |
 | `UNSPECIFIED_FAILURE`             | All                    | MMO failed without giving a reason. Retry with a new ID is generally safe. |
-| `UNKNOWN_ERROR`                   | All                    | pawaPay internal. Verify via status-check. |
+| `UNKNOWN_ERROR`                   | All                    | PawaPay internal. Verify via status-check. |
 
 ## Status enums by operation
 
@@ -84,7 +84,7 @@ There are two categories of `failureCode`:
 
 `ENQUEUED` exists only when the provider is `DELAYED` — deposits never enqueue.
 
-`IN_RECONCILIATION` is automatic: pawaPay's reconciliation engine couldn't determine the final state from the MMO and is using alternative data sources. **No action required**; it resolves itself within minutes (longer for failures than successes).
+`IN_RECONCILIATION` is automatic: PawaPay's reconciliation engine couldn't determine the final state from the MMO and is using alternative data sources. **No action required**; it resolves itself within minutes (longer for failures than successes).
 
 `PROCESSING` in callbacks specifically means the REDIRECT_AUTH flow's `authorizationUrl` is ready — for non-REDIRECT_AUTH providers, you won't see callback `PROCESSING`.
 
@@ -113,7 +113,7 @@ The catch-all `else` is important. New states might be added; surfacing unknown 
 
 ## The "don't mark FAILED prematurely" rule
 
-This is the single most important pattern. Discrepancies between your system and pawaPay are almost always caused by marking something FAILED that actually succeeded — refunding a customer who already got paid, or charging a customer twice.
+This is the single most important pattern. Discrepancies between your system and PawaPay are almost always caused by marking something FAILED that actually succeeded — refunding a customer who already got paid, or charging a customer twice.
 
 Only mark FAILED when:
 
@@ -190,9 +190,9 @@ Statement:    ACCEPTED → PROCESSING → COMPLETED | FAILED
 
 Terminal: `COMPLETED`, `FAILED`. Everything else is in flight.
 
-## Mapping pawaPay statuses to user-facing messages
+## Mapping PawaPay statuses to user-facing messages
 
-| pawaPay status        | User-facing message (suggested)                         | Action                                  |
+| PawaPay status        | User-facing message (suggested)                         | Action                                  |
 |-----------------------|---------------------------------------------------------|-----------------------------------------|
 | `ACCEPTED`/`PENDING`  | "Processing your payment"                               | Wait                                    |
 | `PROCESSING`          | "Almost there"                                           | Wait (or redirect, for REDIRECT_AUTH)   |

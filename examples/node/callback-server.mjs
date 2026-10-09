@@ -1,10 +1,10 @@
-// Receive pawaPay callbacks (push status updates) on your own server.
+// Receive PawaPay callbacks (push status updates) on your own server.
 // Node 18+, no packages to install.
 //
-// On the shared CITS26 account, pawaPay forwards every team's callbacks to
+// On the shared CITS26 account, PawaPay forwards every team's callbacks to
 // every registered URL. This server keeps the ones tagged with your team
 // and ignores the rest. It doesn't verify signatures: on the shared account
-// pawaPay signs callbacks for the forwarding service's address, so a
+// PawaPay signs callbacks for the forwarding service's address, so a
 // signature check here would always fail.
 //
 // Run from the examples/ folder:
@@ -24,7 +24,7 @@ if (existsSync(".env")) {
 
 const TEAM = process.env.PAWAPAY_TEAM || "team-unknown";
 const PORT = Number(process.env.PORT || 3000);
-const seen = new Set(); // pawaPay retries, so the same callback can arrive twice
+const seen = new Set(); // PawaPay retries, so the same callback can arrive twice
 
 createServer((req, res) => {
   if (req.method !== "POST") {
@@ -36,7 +36,7 @@ createServer((req, res) => {
   req.on("data", (chunk) => (raw += chunk));
   req.on("end", () => {
     // Reply 200 straight away, even for callbacks you ignore.
-    // Anything else makes pawaPay retry.
+    // Anything else makes PawaPay retry.
     res.writeHead(200).end("ok");
 
     let callback;

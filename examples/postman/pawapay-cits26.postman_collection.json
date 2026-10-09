@@ -1,8 +1,8 @@
 {
   "info": {
-    "name": "pawaPay CITS26 sandbox",
+    "name": "PawaPay CITS26 sandbox",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "pawaPay Merchant API v2 calls for the CITS26 Bootcamp. Set the `token` variable on the collection to your sandbox API token, then run the requests top to bottom. Each Initiate request creates a fresh ID and stores it, so the matching Check status request works without copy-paste."
+    "description": "PawaPay Merchant API v2 calls for the CITS26 Bootcamp. Set the `token` variable on the collection to your sandbox API token, then run the requests top to bottom. Each Initiate request creates a fresh ID and stores it, so the matching Check status request works without copy-paste."
   },
   "auth": {
     "type": "bearer",
@@ -146,7 +146,7 @@
                 "deposits"
               ]
             },
-            "description": "Starts a deposit. ACCEPTED means pawaPay received it. Run Check deposit status to see the result.",
+            "description": "Starts a deposit. ACCEPTED means PawaPay received it. Run Check deposit status to see the result.",
             "body": {
               "mode": "raw",
               "raw": "{\n  \"depositId\": \"{{depositId}}\",\n  \"amount\": \"1000\",\n  \"currency\": \"XAF\",\n  \"payer\": {\n    \"type\": \"MMO\",\n    \"accountDetails\": {\n      \"phoneNumber\": \"{{phoneNumber}}\",\n      \"provider\": \"{{provider}}\"\n    }\n  },\n  \"customerMessage\": \"CITS26 test\",\n  \"metadata\": [\n    {\n      \"team\": \"{{team}}\"\n    }\n  ]\n}",

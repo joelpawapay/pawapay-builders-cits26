@@ -1,6 +1,6 @@
 # Statements — async ledger export
 
-The Statements API lets you request a CSV export of all wallet activity in a time range. The export is generated asynchronously; pawaPay POSTs a callback when it's ready, and the result is a pre-signed download URL.
+The Statements API lets you request a CSV export of all wallet activity in a time range. The export is generated asynchronously; PawaPay POSTs a callback when it's ready, and the result is a pre-signed download URL.
 
 ## Endpoints
 
@@ -40,7 +40,7 @@ No `ENQUEUED` state. No `IN_RECONCILIATION` state. Statements are simpler.
 - `wallet.country` (required) — ISO 3166-1 alpha-3.
 - `wallet.currency` (required) — ISO 4217. Must match a wallet on the account.
 - `wallet.provider` (optional) — only relevant when the account has per-provider wallets. Most accounts have a single per-country wallet — omit `provider`.
-- `callbackUrl` (required) — HTTPS URL where pawaPay will POST when the statement is ready. Note: this is per-request — distinct from the deposit/payout callback URLs you set in the Dashboard.
+- `callbackUrl` (required) — HTTPS URL where PawaPay will POST when the statement is ready. Note: this is per-request — distinct from the deposit/payout callback URLs you set in the Dashboard.
 - `startDate`, `endDate` (required) — RFC 3339 date-time. Maximum range **31 days**.
 - `compressed` (optional, default `false`) — when `true`, the output is `.csv.gz`. When `false`, plain `.csv`.
 
@@ -111,7 +111,7 @@ Top-level `status`: `FOUND | NOT_FOUND`. `data.status`: `PROCESSING | COMPLETED 
 
 ## Statement callback
 
-When the statement reaches `COMPLETED` (or `FAILED`), pawaPay POSTs to your `callbackUrl`. The callback body matches the `data` portion of the status-check response — `statementId`, `status`, `downloadUrl` (when COMPLETED), etc.
+When the statement reaches `COMPLETED` (or `FAILED`), PawaPay POSTs to your `callbackUrl`. The callback body matches the `data` portion of the status-check response — `statementId`, `status`, `downloadUrl` (when COMPLETED), etc.
 
 Acknowledge with HTTP 200. The same callback handling rules apply (idempotency, return 200 quickly, no auth gate, IP whitelist — see `references/callbacks.md`).
 
@@ -119,7 +119,7 @@ Acknowledge with HTTP 200. The same callback handling rules apply (idempotency, 
 
 The CSV columns vary slightly across providers/countries, but the universal headers are roughly:
 
-- `Transaction ID` — pawaPay's transaction ID
+- `Transaction ID` — PawaPay's transaction ID
 - `Transaction Type` — DEPOSIT, PAYOUT, REFUND, REMITTANCE, TOPUP, FEE, etc.
 - `Status` — COMPLETED, FAILED, etc.
 - `Currency`

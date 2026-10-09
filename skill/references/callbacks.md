@@ -1,10 +1,10 @@
 # Callbacks (webhooks) — receiving and handling
 
-The pawaPay API is asynchronous. Once a transaction reaches a terminal state (`COMPLETED` or `FAILED`), pawaPay POSTs to your configured callback URL. This is the primary way to learn final state — polling is a fallback for missed callbacks.
+The PawaPay API is asynchronous. Once a transaction reaches a terminal state (`COMPLETED` or `FAILED`), PawaPay POSTs to your configured callback URL. This is the primary way to learn final state — polling is a fallback for missed callbacks.
 
 ## Setting up a callback URL
 
-Configure per-operation-type callback URLs in the pawaPay Dashboard (Settings → System config → Callback URLs). Sandbox and production each have their own. The URLs you set appear in `active-conf` per operation type:
+Configure per-operation-type callback URLs in the PawaPay Dashboard (Settings → System config → Callback URLs). Sandbox and production each have their own. The URLs you set appear in `active-conf` per operation type:
 
 ```json
 "operationTypes": {
@@ -22,7 +22,7 @@ For statements, the callback URL is per-request — see `references/statements.m
 
 - **HTTPS only**, with a certificate from a trusted CA (no self-signed).
 - **Accept POST** with JSON body.
-- **No auth gate** — pawaPay won't send your tokens. Either expose the endpoint publicly (with the signature verification below as the security boundary), or whitelist pawaPay's IPs **and** exempt them from any auth/WAF.
+- **No auth gate** — PawaPay won't send your tokens. Either expose the endpoint publicly (with the signature verification below as the security boundary), or whitelist PawaPay's IPs **and** exempt them from any auth/WAF.
 - Reachable from the public internet.
 
 ### IPs to whitelist
@@ -41,9 +41,9 @@ These are stable as of mid-2025 but check `https://docs.pawapay.io/v2/docs/what_
 
 ## Delivery semantics
 
-- pawaPay POSTs the JSON callback to your URL.
+- PawaPay POSTs the JSON callback to your URL.
 - Your handler must return HTTP **200** to acknowledge receipt. Any non-2xx response is treated as a delivery failure.
-- On failure, pawaPay retries for up to **15 minutes** with exponential-ish backoff.
+- On failure, PawaPay retries for up to **15 minutes** with exponential-ish backoff.
 - After 15 minutes of failures, delivery stops. You can request a resend manually with `POST /v2/<op>/resend-callback/{id}` or from the Dashboard.
 
 This means: **return 200 quickly even if your downstream processing is queued**. Do the heavy work async; just acknowledge the receipt fast.
@@ -128,11 +128,11 @@ Use `scripts/verify_callback.py` as the reference implementation.
 
 ### Note on `@authority` for inbound callbacks
 
-The `@authority` in the signature base is the value of the `Host` header pawaPay sent — usually the merchant-configured callback URL's hostname. Use the host as observed in the request, not what you expect.
+The `@authority` in the signature base is the value of the `Host` header PawaPay sent — usually the merchant-configured callback URL's hostname. Use the host as observed in the request, not what you expect.
 
 ## Idempotency
 
-Callbacks may be delivered more than once (e.g. if your 200 response was delayed and pawaPay's retry timer fired). Your handler MUST be idempotent.
+Callbacks may be delivered more than once (e.g. if your 200 response was delayed and PawaPay's retry timer fired). Your handler MUST be idempotent.
 
 Pattern:
 
@@ -248,10 +248,10 @@ def reconcile():
 
 ## Pitfalls
 
-- **Putting an authentication gate in front of the callback endpoint.** Either expose it publicly, or whitelist pawaPay's IPs and exempt them. Otherwise callbacks bounce silently.
+- **Putting an authentication gate in front of the callback endpoint.** Either expose it publicly, or whitelist PawaPay's IPs and exempt them. Otherwise callbacks bounce silently.
 - **Doing heavy work before returning 200.** Database writes / queue publishes only. Defer the rest.
 - **Using `created` or `providerTransactionId` as idempotency key.** Use the merchant-supplied transaction ID.
 - **Ignoring `status: PROCESSING` callbacks.** For REDIRECT_AUTH, that's your cue to redirect the customer.
 - **Not verifying signatures.** If `signedCallbacks: true`, an unsigned callback is a forgery attempt.
-- **Hardcoding pawaPay's IPs.** They can change. Use them as a defence-in-depth filter, not the sole authorisation.
+- **Hardcoding PawaPay's IPs.** They can change. Use them as a defence-in-depth filter, not the sole authorisation.
 - **Treating callbacks as ordered.** They aren't. A `FAILED` callback can in theory arrive after a `PROCESSING` one is still in flight. Handle defensively.

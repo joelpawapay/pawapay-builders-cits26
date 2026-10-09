@@ -41,12 +41,12 @@ Payment received. Deliver the goods.
 
 1. Sends the phone number to `predict-provider`, which cleans it up and names the operator.
 2. Creates a UUIDv4 deposit ID.
-3. Sends the deposit to pawaPay with a `team` tag in the metadata.
+3. Sends the deposit to PawaPay with a `team` tag in the metadata.
 4. Checks the status every 3 seconds until the deposit is `COMPLETED` or `FAILED`.
 
 ## API reference for each call
 
-| Script step | pawaPay reference |
+| Script step | PawaPay reference |
 | --- | --- |
 | Predict the operator | [Predict provider](https://docs.pawapay.io/v2/api-reference/toolkit/predict-provider) |
 | Start a deposit | [Initiate deposit](https://docs.pawapay.io/v2/api-reference/deposits/initiate-deposit) |
@@ -60,16 +60,16 @@ Payment received. Deliver the goods.
 
 | | Deposit API | Hosted checkout (payment page) |
 | --- | --- | --- |
-| Who builds the payment form | You | pawaPay |
+| Who builds the payment form | You | PawaPay |
 | Customer leaves your site | No | Yes, then returns to your `returnUrl` |
 | Code to write | More | Less |
 | Good for | Apps, USSD, bots, custom checkouts | Websites and quick demos |
 
-With the hosted checkout, pawaPay sends the customer back to your `returnUrl`. Anyone can open that URL, so check the deposit status with pawaPay before you mark the order paid. `payment-page.mjs check <depositId>` shows how.
+With the hosted checkout, PawaPay sends the customer back to your `returnUrl`. Anyone can open that URL, so check the deposit status with PawaPay before you mark the order paid. `payment-page.mjs check <depositId>` shows how.
 
 ## Back from the hosted checkout
 
-After you pay on the hosted checkout, pawaPay sends you back to this section, the default `returnUrl` in the examples. Your payment went through pawaPay, but a return visit proves nothing. Confirm it with the status check:
+After you pay on the hosted checkout, PawaPay sends you back to this section, the default `returnUrl` in the examples. Your payment went through PawaPay, but a return visit proves nothing. Confirm it with the status check:
 
 ```bash
 node node/payment-page.mjs check <depositId>
@@ -82,7 +82,7 @@ In your own app, set `RETURN_URL` in `.env` to a page on your site, and run that
 Two collections, for two jobs:
 
 - **This repo's collection** (`postman/pawapay-cits26.postman_collection.json`) is set up for Cameroon: XAF, MTN and Orange, the `team` tag, and fresh IDs for every request. Start here.
-- **[pawaPay's official collection](https://app.getpostman.com/run-collection/25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3%26entityType%3Dcollection%26workspaceId%3D8c3e7775-3da5-4bab-8a8c-ffb331ccfe27)** covers every endpoint in the API. Follow the [Postman guide](https://docs.pawapay.io/v2/docs/postman) to set it up, using the variables `apiToken` and `baseUrl`. Skip the guide's step that sets callback URLs: on the shared account those are already set for every team.
+- **[PawaPay's official collection](https://app.getpostman.com/run-collection/25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3%26entityType%3Dcollection%26workspaceId%3D8c3e7775-3da5-4bab-8a8c-ffb331ccfe27)** covers every endpoint in the API. Follow the [Postman guide](https://docs.pawapay.io/v2/docs/postman) to set it up, using the variables `apiToken` and `baseUrl`. Skip the guide's step that sets callback URLs: on the shared account those are already set for every team.
 
 To use this repo's collection:
 

@@ -4,13 +4,13 @@ Two layers: a bearer token (always required) and optional RFC 9421 message signa
 
 ## Bearer token
 
-Every request to the pawaPay Merchant API carries:
+Every request to the PawaPay Merchant API carries:
 
 ```
 Authorization: Bearer <YOUR_API_TOKEN>
 ```
 
-The token is generated in the pawaPay Dashboard (sandbox: `https://dashboard.sandbox.pawapay.io/`, production: `https://dashboard.pawapay.io/`). Sandbox and production tokens are different — generate a new one when promoting from sandbox to production.
+The token is generated in the PawaPay Dashboard (sandbox: `https://dashboard.sandbox.pawapay.io/`, production: `https://dashboard.pawapay.io/`). Sandbox and production tokens are different — generate a new one when promoting from sandbox to production.
 
 Store tokens in your secrets manager / per-environment config. Never commit them.
 
@@ -53,11 +53,11 @@ Accept-Signature:  rsa-pss-sha512,ecdsa-p256-sha256,rsa-v1_5-sha256,ecdsa-p384-s
 Accept-Digest:     sha-256,sha-512
 ```
 
-`Accept-Signature` and `Accept-Digest` advertise which response signatures/digests the merchant can verify — pawaPay will pick from the list when signing the response.
+`Accept-Signature` and `Accept-Digest` advertise which response signatures/digests the merchant can verify — PawaPay will pick from the list when signing the response.
 
 ### Allowed signature algorithms
 
-Pick one — `ecdsa-p256-sha256` is the simplest and what pawaPay's reference Node implementation uses.
+Pick one — `ecdsa-p256-sha256` is the simplest and what PawaPay's reference Node implementation uses.
 
 - `rsa-pss-sha512` — RSASSA-PSS with SHA-512
 - `rsa-v1_5-sha256` — RSASSA-PKCS1-v1_5 with SHA-256
@@ -93,7 +93,7 @@ For a `POST /v2/deposits` request:
 - `scripts/sign_request.js` — Node, ECDSA P-256 + SHA-512.
 - `scripts/sign_request.py` — Python, `cryptography` package, ECDSA P-256 + SHA-512.
 
-When the user is in Node specifically, point them at pawaPay's own reference repo (`pawaPay/signatures-node-example`) on GitHub — they may already use it.
+When the user is in Node specifically, point them at PawaPay's own reference repo (`PawaPay/signatures-node-example`) on GitHub — they may already use it.
 
 ### Common signing pitfalls
 
@@ -101,14 +101,14 @@ When the user is in Node specifically, point them at pawaPay's own reference rep
 - **Wrong `@authority`.** It's the `Host` value the server sees — for production `api.pawapay.io`, sandbox `api.sandbox.pawapay.io`. Not your URL.
 - **Wrong `@path`.** Path only — no query string, no host. Starts with `/`.
 - **Timezone in `Signature-Date`.** Use `Z` (UTC). Don't use local time.
-- **`created`/`expires` skew.** Keep your server clock NTP-synced; pawaPay rejects expired signatures.
+- **`created`/`expires` skew.** Keep your server clock NTP-synced; PawaPay rejects expired signatures.
 - **Mixed case in algorithm string.** Use exactly `ecdsa-p256-sha256`, lowercase, hyphenated.
 - **Forgetting to include `content-type` in the covered list when you send a body.** It's recommended in the signature base.
 - **Wrong key id.** `keyid` must match the registered identifier in the Dashboard exactly. Mismatches return `HTTP_SIGNATURE_ERROR`.
 
 ## Verifying signed callbacks (recommended)
 
-When `signatureConfiguration.signedCallbacks = true` is enabled (via the Dashboard), every callback from pawaPay carries:
+When `signatureConfiguration.signedCallbacks = true` is enabled (via the Dashboard), every callback from PawaPay carries:
 
 - `Content-Digest`
 - `Signature-Date`
@@ -150,7 +150,7 @@ Match the `keyid` in `Signature-Input` to the `id` here.
    openssl ecparam -name prime256v1 -genkey -noout -out private.pem
    openssl ec -in private.pem -pubout -out public.pem
    ```
-2. Upload `public.pem` to the pawaPay Dashboard (Settings → API tokens → Signatures). Assign it a key ID.
+2. Upload `public.pem` to the PawaPay Dashboard (Settings → API tokens → Signatures). Assign it a key ID.
 3. Store `private.pem` in your secrets manager — Vault, AWS Secrets Manager, GCP Secret Manager.
 4. Update your initiation code to sign with the private key using the chosen `keyid`.
 5. Enable "Signed requests" in the Dashboard. From this moment, unsigned calls are rejected.

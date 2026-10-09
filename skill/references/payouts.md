@@ -1,6 +1,6 @@
 # Payouts — sending money to a customer
 
-A payout moves funds from the merchant's pawaPay wallet to the customer's mobile money wallet. No customer authorisation is needed — the customer just receives an SMS confirmation when it lands.
+A payout moves funds from the merchant's PawaPay wallet to the customer's mobile money wallet. No customer authorisation is needed — the customer just receives an SMS confirmation when it lands.
 
 ## Endpoints
 
@@ -18,7 +18,7 @@ A payout moves funds from the merchant's pawaPay wallet to the customer's mobile
 ACCEPTED → (ENQUEUED) → PROCESSING → (IN_RECONCILIATION) → COMPLETED | FAILED
 ```
 
-The `ENQUEUED` state is unique to payouts/remittances/refunds (vs deposits): when the MMO is `DELAYED`, pawaPay accepts the payout and queues it until the MMO recovers.
+The `ENQUEUED` state is unique to payouts/remittances/refunds (vs deposits): when the MMO is `DELAYED`, PawaPay accepts the payout and queues it until the MMO recovers.
 
 ## Pre-flight: pick the right provider/limits
 
@@ -70,7 +70,7 @@ Same fields as a deposit except:
 
 ### Funds reservation
 
-On `ACCEPTED` the principal amount is reserved from the merchant's pawaPay wallet. Fees are deducted from the wallet balance only on `COMPLETED`. On `FAILED` the reservation is released back to the wallet.
+On `ACCEPTED` the principal amount is reserved from the merchant's PawaPay wallet. Fees are deducted from the wallet balance only on `COMPLETED`. On `FAILED` the reservation is released back to the wallet.
 
 This means the merchant's wallet needs to have at least `amount` available at initiation time; otherwise the payout is rejected with `PAWAPAY_WALLET_OUT_OF_FUNDS`.
 
@@ -133,7 +133,7 @@ When the MMO is `DELAYED` in `active-conf`/`availability`:
 
 - New payouts are still `ACCEPTED` on initiation.
 - Their lifecycle status moves to `ENQUEUED`.
-- pawaPay's payment operations team monitors the MMO; when it recovers, the payout is processed automatically.
+- PawaPay's payment operations team monitors the MMO; when it recovers, the payout is processed automatically.
 - No merchant action needed; the merchant can keep showing the customer "payment in progress".
 
 If the merchant wants to abandon an `ENQUEUED` payout:
@@ -171,7 +171,7 @@ Set in `failureReason.failureCode` when `data.status = FAILED`:
 - `PAWAPAY_WALLET_OUT_OF_FUNDS` — merchant wallet ran out mid-flight (rare; mostly caught at initiation).
 - `MANUALLY_CANCELLED` — cancelled via fail-enqueued or the Dashboard.
 - `UNSPECIFIED_FAILURE` — MMO failed but gave no reason. Retry-safe with a new ID.
-- `UNKNOWN_ERROR` — pawaPay internal issue. Verify via status-check; do not assume failure.
+- `UNKNOWN_ERROR` — PawaPay internal issue. Verify via status-check; do not assume failure.
 
 ## Callback shape (payout webhook)
 
@@ -280,7 +280,7 @@ async function verifyPayoutStatus(payoutId) {
 
 ## Pitfalls specific to payouts
 
-- **Wallet pre-funding.** Payouts draw from the merchant's pawaPay wallet. The wallet must be funded (via Dashboard top-up or settlement) before payouts can land. Check `GET /v2/wallet-balances`.
+- **Wallet pre-funding.** Payouts draw from the merchant's PawaPay wallet. The wallet must be funded (via Dashboard top-up or settlement) before payouts can land. Check `GET /v2/wallet-balances`.
 - **Forgetting to handle ENQUEUED.** Don't show "failed" to the customer — show "in progress; will complete when the network recovers".
 - **Retrying a `DUPLICATE_IGNORED` with a new ID.** Don't. The original payout exists. Call status-check on the original ID.
 - **Bulk payouts assumed atomic.** They are not — each item resolves independently. Process the response array element by element.

@@ -14,7 +14,7 @@ The remittance API is publicly documented only in the OpenAPI spec — there is 
 | POST   | `/v2/remittances/fail-enqueued/{remittanceId}`         | Cancel an ENQUEUED remittance        | No      |
 | POST   | `/v2/remittances/resend-callback/{remittanceId}`       | Re-trigger the final-state callback  | No      |
 
-Account enablement: remittances must be enabled per-account. If not enabled you'll see `REMITTANCES_NOT_ALLOWED` (HTTP 403). Talk to pawaPay Sales.
+Account enablement: remittances must be enabled per-account. If not enabled you'll see `REMITTANCES_NOT_ALLOWED` (HTTP 403). Talk to PawaPay Sales.
 
 ## State machine
 
@@ -138,7 +138,7 @@ Optional:
 **`relationshipRecipient`** (a long list — copy-paste safe):
 `FATHER, MOTHER, SON, DAUGHTER, BROTHER, SISTER, HUSBAND, WIFE, PARTNER, FRIEND, AUNT, UNCLE, COUSIN, NEPHEW, NIECE, GRANDFATHER, GRANDMOTHER, GRANDSON, GRANDDAUGHTER, STEPCHILD, DAUGHTER_IN_LAW, SON_IN_LAW, BORTHER_IN_LAW, SISTER_IN_LAW, MOTHER_IN_LAW, GUARDIAN, SELF`
 
-**Note**: `BORTHER_IN_LAW` is a typo in the spec (should be `BROTHER_IN_LAW`). It is enforced literally — send `BORTHER_IN_LAW`, not the corrected spelling, until pawaPay fixes it.
+**Note**: `BORTHER_IN_LAW` is a typo in the spec (should be `BROTHER_IN_LAW`). It is enforced literally — send `BORTHER_IN_LAW`, not the corrected spelling, until PawaPay fixes it.
 
 ### Response — 200
 
@@ -156,7 +156,7 @@ Optional:
 
 `NO_AUTHENTICATION, AUTHENTICATION_ERROR, AUTHORISATION_ERROR, HTTP_SIGNATURE_ERROR, INVALID_INPUT, MISSING_PARAMETER, UNSUPPORTED_PARAMETER, INVALID_PARAMETER, DUPLICATE_METADATA_FIELD, REMITTANCES_NOT_ALLOWED, INVALID_PHONE_NUMBER, INVALID_AMOUNT, AMOUNT_OUT_OF_BOUNDS, INVALID_CURRENCY, INVALID_PROVIDER, PROVIDER_TEMPORARILY_UNAVAILABLE, PAWAPAY_WALLET_OUT_OF_FUNDS, UNKNOWN_ERROR`.
 
-`REMITTANCES_NOT_ALLOWED`: account doesn't have remittances enabled. Contact pawaPay Sales.
+`REMITTANCES_NOT_ALLOWED`: account doesn't have remittances enabled. Contact PawaPay Sales.
 
 ## Bulk — POST /v2/remittances/bulk
 
@@ -239,9 +239,9 @@ The remittance callback includes the `sender` block (required field) — unlike 
 
 ## KYC / compliance notes
 
-- **Truth of the data is on the merchant.** pawaPay does not verify the sender's ID document — it stores and reports the values. Merchants are responsible for collecting valid KYC and meeting their jurisdiction's AML rules.
-- **`transactionReference` is your audit anchor.** It should be your internal transaction ID; appears in pawaPay statements and dashboards.
-- **`buyFxRate` and `senderFees` are display values.** They appear in reporting and the customer's statements. They don't affect what pawaPay debits — pawaPay debits `amount` (in `currency`) from your wallet.
+- **Truth of the data is on the merchant.** PawaPay does not verify the sender's ID document — it stores and reports the values. Merchants are responsible for collecting valid KYC and meeting their jurisdiction's AML rules.
+- **`transactionReference` is your audit anchor.** It should be your internal transaction ID; appears in PawaPay statements and dashboards.
+- **`buyFxRate` and `senderFees` are display values.** They appear in reporting and the customer's statements. They don't affect what PawaPay debits — PawaPay debits `amount` (in `currency`) from your wallet.
 
 ## Reduced example: minimal happy-path request
 
