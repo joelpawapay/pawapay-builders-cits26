@@ -48,6 +48,10 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 **My browser JavaScript can't call the API.** Call pawaPay from your server, never from the browser or a mobile app. Code in the browser exposes your token to anyone who opens developer tools. Have your frontend call your own backend, and have the backend call pawaPay.
 
+**My callback handler rejects every callback with a signature error.** On the shared CITS26 account, pawaPay signs callbacks for the forwarding service's address, so verification fails on your server. Turn signature verification off and reply `200`. See [tracking-transactions.md](tracking-transactions.md).
+
+**The callback amount doesn't match what I sent.** Callbacks report amounts with decimals, such as `"1000.0000"` for `"1000"`. Compare them as numbers, not strings.
+
 **I can't find my transactions in the dashboard.** Every team shares the account. Search by your deposit ID, or by the `team` metadata tag. See [tracking-transactions.md](tracking-transactions.md).
 
 **I never got the dashboard invite.** Check spam. Confirm you filled in the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform), then email Joel with the address you gave.

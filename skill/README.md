@@ -60,6 +60,7 @@ Claude reads the right reference file(s) before generating code, and uses the sc
 - The skill assumes you have a sandbox API token. See [`../getting-started.md`](../getting-started.md) for how to get one.
 - Amounts are always **strings**, never floats. The skill enforces this. Let it.
 - Every transaction needs a **UUIDv4 ID you generate** before the API call, for idempotency. The skill drills this in.
+- **Callbacks on the shared CITS26 account:** the skill verifies callback signatures by default. On the shared account that check fails, because pawaPay signs callbacks for the forwarding service's address. Tell Claude "don't verify callback signatures, and filter callbacks by the `team` metadata tag". See [`../tracking-transactions.md`](../tracking-transactions.md).
 
 ## Reporting issues with the skill
 

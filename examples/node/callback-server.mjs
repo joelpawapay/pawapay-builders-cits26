@@ -3,7 +3,9 @@
 //
 // On the shared CITS26 account, pawaPay forwards every team's callbacks to
 // every registered URL. This server keeps the ones tagged with your team
-// and ignores the rest.
+// and ignores the rest. It doesn't verify signatures: on the shared account
+// pawaPay signs callbacks for the forwarding service's address, so a
+// signature check here would always fail.
 //
 // Run from the examples/ folder:
 //   node node/callback-server.mjs
