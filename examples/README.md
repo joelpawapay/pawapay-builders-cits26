@@ -44,6 +44,18 @@ Payment received. Deliver the goods.
 3. Sends the deposit to pawaPay with a `team` tag in the metadata.
 4. Checks the status every 3 seconds until the deposit is `COMPLETED` or `FAILED`.
 
+## API reference for each call
+
+| Script step | pawaPay reference |
+| --- | --- |
+| Predict the operator | [Predict provider](https://docs.pawapay.io/v2/api-reference/toolkit/predict-provider) |
+| Start a deposit | [Initiate deposit](https://docs.pawapay.io/v2/api-reference/deposits/initiate-deposit) |
+| Check the status | [Check deposit status](https://docs.pawapay.io/v2/api-reference/deposits/check-deposit-status) |
+| Hosted checkout | [Deposit via payment page](https://docs.pawapay.io/v2/api-reference/payment-page/deposit-via-payment-page) |
+| Receive a callback | [Deposit callback](https://docs.pawapay.io/v2/api-reference/deposits/deposit-callback) |
+| Send money out | [Initiate payout](https://docs.pawapay.io/v2/api-reference/payouts/initiate-payout) |
+| Limits and operators on the account | [Active configuration](https://docs.pawapay.io/v2/api-reference/toolkit/active-configuration) |
+
 ## Deposit or hosted checkout?
 
 | | Deposit API | Hosted checkout (payment page) |
@@ -66,6 +78,13 @@ node node/payment-page.mjs check <depositId>
 In your own app, set `RETURN_URL` in `.env` to a page on your site, and run that same status check before you mark the order paid.
 
 ## Postman
+
+Two collections, for two jobs:
+
+- **This repo's collection** (`postman/pawapay-cits26.postman_collection.json`) is set up for Cameroon: XAF, MTN and Orange, the `team` tag, and fresh IDs for every request. Start here.
+- **[pawaPay's official collection](https://app.getpostman.com/run-collection/25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D25129489-56cbaf62-56c2-4734-bf1f-f61d369cc9e3%26entityType%3Dcollection%26workspaceId%3D8c3e7775-3da5-4bab-8a8c-ffb331ccfe27)** covers every endpoint in the API. Follow the [Postman guide](https://docs.pawapay.io/v2/docs/postman) to set it up, using the variables `apiToken` and `baseUrl`. Skip the guide's step that sets callback URLs: on the shared account those are already set for every team.
+
+To use this repo's collection:
 
 1. Import `postman/pawapay-cits26.postman_collection.json`.
 2. Open the collection's **Variables** tab. Set `token` to your sandbox token and `team` to your team name.

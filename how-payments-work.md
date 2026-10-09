@@ -61,5 +61,7 @@ A refund returns all or part of a completed deposit to the customer who paid.
 
 - [getting-started.md](getting-started.md) to make your first sandbox deposit
 - [examples/](examples/) for code you can copy
-- [pawaPay docs: deposits](https://docs.pawapay.io/v2/docs/deposits) for the full flow
+- [What's mobile money?](https://docs.pawapay.io/v2/docs/whats_mobile_money): pawaPay's own introduction, including how it differs from card payments
+- [What you should know](https://docs.pawapay.io/v2/docs/what_to_know): asynchronous payments, callbacks, and other mobile money details
+- pawaPay guides for [deposits](https://docs.pawapay.io/v2/docs/deposits), [payouts](https://docs.pawapay.io/v2/docs/payouts), [refunds](https://docs.pawapay.io/v2/docs/refunds), and the [payment page](https://docs.pawapay.io/v2/docs/payment_page)
 - The [Claude skill](skill/README.md) to write the code with you

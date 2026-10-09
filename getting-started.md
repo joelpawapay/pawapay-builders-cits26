@@ -18,11 +18,13 @@ Follow the official guide: [pawaPay docs: API tokens](https://docs.pawapay.io/da
 
 The short version:
 
-1. Open **System configuration → API tokens** in the sandbox dashboard.
-2. Click **Create token** and name it after your team (e.g. `team-<your-team-name>`).
+1. Open the [sandbox dashboard](https://dashboard.sandbox.pawapay.io) and go to **Developers → Create API Token**.
+2. Create a token and name it after your team (e.g. `team-<your-team-name>`).
 3. Copy the token now. pawaPay shows it once.
 
 One person per team creates the token and shares it with teammates over a private channel. pawaPay can then revoke one team's token without breaking anyone else's build.
+
+> **One account, every team.** The Developers page also holds the account's **Callback URLs** and **API Security** settings. pawaPay set these up for all teams, so leave them alone: changing them stops callbacks for everyone. Don't revoke a token you didn't create. pawaPay's own Postman guide has a step that sets callback URLs; skip it on this account.
 
 ## 3. Put the token in a `.env` file
 
@@ -80,7 +82,7 @@ In the sandbox, the phone number decides the result. No real phone rings.
 | Payout `FAILED`: `WALLET_LIMIT_REACHED` | none | `237693456099` |
 | Payout `FAILED`: `UNSPECIFIED_FAILURE` | `237653456119` | `237693456119` |
 
-Source: [pawaPay test numbers](https://docs.pawapay.io/v2/docs/test_numbers). Test the failures too. Real customers cancel, run out of balance, and ignore the PIN prompt.
+Source: [pawaPay test numbers](https://docs.pawapay.io/v2/docs/test_numbers). If your app shows MTN or Orange logos, follow the [provider brand guidelines](https://docs.pawapay.io/v2/docs/brand_guidelines). Test the failures too. Real customers cancel, run out of balance, and ignore the PIN prompt.
 
 Next, read [tracking-transactions.md](tracking-transactions.md) to find your own transactions on the shared account. If something breaks, see [troubleshooting.md](troubleshooting.md).
 

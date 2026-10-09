@@ -13,7 +13,7 @@ pawaPay gives every team free access to a shared sandbox: a test copy of the pay
 ## Your first payment in 15 minutes
 
 1. **Get access.** Each team member fills in the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform) with the email they want on the dashboard. Accept the invite from pawaPay when it arrives.
-2. **Create a token** in the [sandbox dashboard](https://dashboard.sandbox.pawapay.io) under **System configuration → API tokens**. Copy it. pawaPay shows it once.
+2. **Create a token** in the [sandbox dashboard](https://dashboard.sandbox.pawapay.io) under **Developers → Create API Token**. Copy it. pawaPay shows it once.
 3. **Run a payment:**
 
    ```bash
@@ -26,6 +26,8 @@ pawaPay gives every team free access to a shared sandbox: a test copy of the pay
 4. **See `Payment received.`** You just collected 1000 XAF from a test MTN number.
 
 Stuck on a step? [getting-started.md](getting-started.md) covers each one in detail.
+
+Every team shares one sandbox account. In the dashboard, leave **Callback URLs** and **API Security** alone, and revoke only your own token. Changing them stops callbacks for every team.
 
 ## Pick your path
 

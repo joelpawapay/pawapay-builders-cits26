@@ -8,7 +8,20 @@ Links, sessions, and contacts for CITS26.
 | --- | --- |
 | Main docs (v2) | https://docs.pawapay.io/v2/docs/welcome |
 | API reference | https://docs.pawapay.io/v2/api-reference |
+| What's mobile money? | https://docs.pawapay.io/v2/docs/whats_mobile_money |
+| What you should know (async payments, callbacks) | https://docs.pawapay.io/v2/docs/what_to_know |
+| Deposits guide | https://docs.pawapay.io/v2/docs/deposits |
+| Payouts guide | https://docs.pawapay.io/v2/docs/payouts |
+| Refunds guide | https://docs.pawapay.io/v2/docs/refunds |
+| Payment page guide | https://docs.pawapay.io/v2/docs/payment_page |
+| Checkouts guide | https://docs.pawapay.io/v2/docs/checkouts |
+| Providers | https://docs.pawapay.io/v2/docs/providers |
 | Sandbox test numbers | https://docs.pawapay.io/v2/docs/test_numbers |
+| Failure codes | https://docs.pawapay.io/v2/docs/failure_codes |
+| Signatures | https://docs.pawapay.io/v2/docs/signatures |
+| Provider brand guidelines | https://docs.pawapay.io/v2/docs/brand_guidelines |
+| Going live | https://docs.pawapay.io/v2/docs/going_live |
+| Official Postman collection | https://docs.pawapay.io/v2/docs/postman |
 | Sandbox dashboard | https://dashboard.sandbox.pawapay.io |
 | Creating an API token | https://docs.pawapay.io/dashboard/other/system_conf/api_tokens |
 | Production dashboard (not used at the Bootcamp) | https://dashboard.pawapay.io |

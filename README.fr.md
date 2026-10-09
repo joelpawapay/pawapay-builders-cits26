@@ -13,7 +13,7 @@ pawaPay donne à chaque équipe un accès gratuit à un sandbox partagé : une c
 ## Votre premier paiement en 15 minutes
 
 1. **Demandez l'accès.** Chaque membre de l'équipe remplit le [formulaire d'inscription](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform) avec l'adresse e-mail à utiliser sur le dashboard. Acceptez ensuite l'invitation envoyée par pawaPay.
-2. **Créez un token** dans le [dashboard sandbox](https://dashboard.sandbox.pawapay.io), rubrique **System configuration → API tokens**. Copiez-le tout de suite : pawaPay ne l'affiche qu'une fois.
+2. **Créez un token** dans le [dashboard sandbox](https://dashboard.sandbox.pawapay.io), rubrique **Developers → Create API Token**. Copiez-le tout de suite : pawaPay ne l'affiche qu'une fois.
 3. **Lancez un paiement :**
 
    ```bash
@@ -63,6 +63,8 @@ La liste complète se trouve dans [getting-started.md](getting-started.md#camero
 | 16 oct., 09h00 | Atelier développeurs, 90 minutes. Venez avec un problème qui vous bloque |
 
 Horaires issus du programme provisoire. Vérifiez le programme imprimé sur place.
+
+Le compte sandbox est partagé entre toutes les équipes. Ne modifiez pas les **Callback URLs** ni **API Security** dans le dashboard, et ne révoquez que votre propre token : sinon, les callbacks de toutes les équipes s'arrêtent.
 
 Pour profiter au mieux de la clinique, acceptez votre invitation et créez votre token avant 11h00 le 14.
 

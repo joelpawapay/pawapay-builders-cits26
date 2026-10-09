@@ -1,6 +1,6 @@
 # Troubleshooting and FAQ
 
-Find your error code below. pawaPay puts it in `failureReason.failureCode` on every failed response.
+Find your error code below. pawaPay puts it in `failureReason.failureCode` on every failed response. The full list is on pawaPay's [failure codes page](https://docs.pawapay.io/v2/docs/failure_codes).
 
 ## pawaPay rejected the request
 
@@ -52,6 +52,8 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 **The callback amount doesn't match what I sent.** Callbacks report amounts with decimals, such as `"1000.0000"` for `"1000"`. Compare them as numbers, not strings.
 
+**Callbacks stopped for everyone.** Someone probably changed the **Callback URLs** or **API Security** settings in the dashboard. Tell the pawaPay team at the clinic desk, or email Joel.
+
 **I can't find my transactions in the dashboard.** Every team shares the account. Search by your deposit ID, or by the `team` metadata tag. See [tracking-transactions.md](tracking-transactions.md).
 
 **I never got the dashboard invite.** Check spam. Confirm you filled in the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform), then email Joel with the address you gave.
@@ -60,7 +62,7 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 ### Going live
 
-**Can we take real money during the Summit?** The sandbox moves no real money. Going live needs a production account, which goes through pawaPay's onboarding. Ask at the pawaPay clinic desk about what that takes for your team.
+**Can we take real money during the Summit?** The sandbox moves no real money. Going live needs a production account, which goes through pawaPay's onboarding. pawaPay's [going live guide](https://docs.pawapay.io/v2/docs/going_live) explains the steps, and the pawaPay clinic desk can tell you what that takes for your team.
 
 **Do we need a registered company?** Not for the sandbox. For production, ask at the clinic desk.
 
