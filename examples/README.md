@@ -22,6 +22,7 @@ Run every command from the `examples/` folder.
 | Deposit, PHP | `php php/deposit.php` | PHP 7.4 or newer with curl |
 | Deposit, curl | `bash curl/deposit.sh` | bash and curl |
 | Hosted checkout, Node | `node node/payment-page.mjs` | Node 18 or newer |
+| Callback receiver, Node | `node node/callback-server.mjs` | Node 18 or newer, plus a tunnel such as `cloudflared` |
 | Postman | Import `postman/pawapay-cits26.postman_collection.json` | [Postman](https://www.postman.com/downloads/) |
 
 The deposit scripts take an optional phone number and amount: `node node/deposit.mjs 237693456789 2500`. With no arguments they charge 1000 XAF to the MTN sandbox number.

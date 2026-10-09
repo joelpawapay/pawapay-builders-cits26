@@ -68,7 +68,7 @@ These arrive later, in the status check or a callback, with status `FAILED`. The
 
 **Which countries work?** These docs focus on Cameroon (`XAF`, MTN and Orange). `GET /v2/active-conf` lists every country and operator enabled on the shared account.
 
-**Can we get push callbacks instead of polling?** Yes. Your server needs a public HTTPS URL. On a laptop, a tunnel gives you one: `cloudflared tunnel --url http://localhost:3000` or `ngrok http 3000`. Then add the URL to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform). See [tracking-transactions.md](tracking-transactions.md).
+**Can we get push callbacks instead of polling?** Yes. Your server needs a public HTTPS URL. On a laptop, a tunnel gives you one: `cloudflared tunnel --url http://localhost:3000` or `ngrok http 3000`. Every registered URL receives every team's callbacks, so filter by your `team` tag. [`examples/node/callback-server.mjs`](examples/node/callback-server.mjs) shows how. Add the URL to the [registration form](https://docs.google.com/forms/d/e/1FAIpQLScC-s8bw7OKarp2PFg6xgOXXvGmgezpWpS5I69ZY54v3miOFg/viewform). See [tracking-transactions.md](tracking-transactions.md).
 
 **Can we build a USSD app, a WhatsApp bot, or a mobile app?** Yes. Any backend that can make HTTPS requests can call pawaPay. Keep the token on the server.
 
