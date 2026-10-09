@@ -39,8 +39,6 @@ The search bar also finds a transaction by its deposit ID or phone number.
 
 **Tag single orders too.** Add a second metadata entry per payment, such as `{ "orderId": "ORD-1042" }`, so you can search for one order directly. Each key can appear only once per transaction.
 
-**`clientReferenceId` is your own reference.** You can also send `clientReferenceId` (for example `"ORD-1042"`) on deposits and payouts. The status check returns it, but callbacks don't include it and the dashboard search doesn't list it. Use it alongside metadata, not instead of it.
-
 **Caveats:** you have to set it on every request. Put the tag in config so you can't forget it. The [examples](examples/) read it from `PAWAPAY_TEAM` in `.env`.
 
 The WooCommerce plugin doesn't add metadata out of the box. You'd add it via a small WP filter hook. If you're building from scratch, ask the skill to wire in the metadata block. See the [Deposits API reference](https://docs.pawapay.io/v2/api-reference/Deposits/initiate-deposit) for the schema.
